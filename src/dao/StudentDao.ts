@@ -35,7 +35,7 @@ export interface StudentDao {
   delete(id: number)
 }
 export interface StudentInfo {
-  id: string
+  id?: string
   idNumber: string
   sex: string
   phoneNumber: string

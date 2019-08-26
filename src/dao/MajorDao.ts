@@ -47,6 +47,7 @@ export interface MajorDao {
   delete(id: number)
 }
 export interface MajorInfo {
+  id?: string
   majorId: string
   majorName: string
   majorType: string

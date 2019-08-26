@@ -35,7 +35,7 @@ export interface SpecialityDao {
   delete(id: number)
 }
 export interface SpecialityInfo {
-  id: string
+  id?: string
   idNumber: string
   type: string
   level: string

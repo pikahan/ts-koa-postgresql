@@ -29,7 +29,7 @@ export interface XuankaoDao {
   delete(id: number)
 }
 export interface XuanKaoInfo {
-  id: string
+  id?: string
   idNumber: string
   subjectId: string
   grade: string

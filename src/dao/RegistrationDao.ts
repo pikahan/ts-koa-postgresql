@@ -37,7 +37,7 @@ export interface RegistrationDao {
   delete(id: number)
 }
 export interface RegistrationInfo {
-  id: string
+  id?: string
   schoolId: string
   year: string
   conditions: string

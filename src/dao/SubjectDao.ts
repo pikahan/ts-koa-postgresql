@@ -34,7 +34,7 @@ export interface SubjectDao {
   delete(id: number)
 }
 export interface SubjectInfo {
-  id: string
+  id?: string
   subjectId: string
   subjectName: string
 }

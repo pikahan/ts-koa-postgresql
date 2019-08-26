@@ -44,7 +44,7 @@ export interface SchoolDao {
   delete(id: number)
 }
 export interface SchoolInfo {
-  id: string
+  id?: string
   schoolId: string
   schoolName: string
   province: string
