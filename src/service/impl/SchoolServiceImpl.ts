@@ -19,15 +19,15 @@ export class SchoolServiceImpl implements SchoolService {
     this.schoolDao = new SchoolDaoImpl()
   }
 
-  create(entity: SchoolInfo): Promise<School> {
-    return undefined;
+  public async create(entity: SchoolInfo): Promise<SchoolInfo> {
+    return await this.schoolDao.create(entity)
   }
 
   delete(id: number) {
   }
 
-  findAll(): Promise<Array<School>> {
-    return undefined;
+  public async findAll(): Promise<Array<SchoolInfo>> {
+    return await this.schoolDao.findAll()
   }
 
   findById(id: number): Promise<School> {

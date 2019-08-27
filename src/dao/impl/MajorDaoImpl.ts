@@ -5,33 +5,52 @@
 import {dbContext} from '../../db/db'
 import {MajorDao, MajorInfo} from '../MajorDao'
 import Major from '../../db/models/major'
+import School from '../../db/models/school'
+import {SchoolInfo} from '../SchoolDao'
+import User from '../../db/models/user'
+import {UserInfo} from '../UserDao'
+import {Op} from 'sequelize'
 
 export class MajorDaoImpl implements MajorDao {
   constructor() {
     dbContext.init()
   }
 
-  create(entity: MajorInfo): Promise<Major> {
-    return undefined;
+  public async create(entity: MajorInfo): Promise<MajorInfo> {
+    return await Major.create(entity)
   }
 
-  delete(id: number) {
+  public async delete(id: number) {
+    return await Major.destroy({
+      where: {
+        id
+      }
+    })
   }
 
-  findAll(): Promise<Array<Major>> {
-    return undefined;
+  public async findAll(): Promise<Array<MajorInfo>> {
+    return await Major.findAll({ raw: true });
   }
 
-  findByMajorId(majorId: string): Promise<Major> {
-    return undefined;
+  public async findByMajorId(majorId: string): Promise<MajorInfo> {
+    return await Major.findOne({ raw: true, where: { majorId } });
   }
 
-  findByMajorName(majorName: string): Promise<Array<Major>> {
-    return undefined;
+  public async findByMajorName(majorName: string): Promise<Array<MajorInfo>> {
+    return await Major.findAll({
+      raw: true,
+      where: {
+        majorName: { [Op.like]: `%${majorName}%` }
+      }
+    })
   }
 
-  findBySchoolId(schoolId: number): Promise<Array<Major>> {
-    return undefined;
+  public async findBySchoolId(schoolId: number): Promise<Array<MajorInfo>> {
+    return await Major.findAll({ raw: true, where: { schoolId } });
+  }
+
+  public async update(id: number , entity: MajorInfo) {
+    return await Major.update( entity, { where: { id } })
   }
 
 

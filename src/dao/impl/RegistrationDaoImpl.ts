@@ -71,4 +71,8 @@ export class RegistrationDaoImpl implements RegistrationDao {
     })
     return results
   }
+
+  public async update(id: number , entity: RegistrationInfo) {
+    return await Registration.update( entity, { where: { id } })
+  }
 }

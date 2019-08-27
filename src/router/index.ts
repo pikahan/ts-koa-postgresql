@@ -5,9 +5,7 @@
 import * as Router from 'koa-router'
 import userRouter from './userRouter'
 import registrationRouter from './registrationRouter'
-import {UserService} from '../service/UserService'
-import {UserServiceImpl} from '../service/impl/UserServiceImpl'
-import user from '../control/user'
+import schoolRouter from './schoolRouter'
 
 const router = new Router({
   prefix: '/api',
@@ -21,5 +19,8 @@ router.get('/login', async ctx => {
 router.use('/user', userRouter.routes(), userRouter.allowedMethods())
 
 router.use('/registration', registrationRouter.routes(), registrationRouter.allowedMethods())
+
+router.use('/school', schoolRouter.routes(), schoolRouter.allowedMethods())
+
 
 export {router}

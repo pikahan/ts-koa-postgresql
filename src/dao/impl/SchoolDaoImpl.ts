@@ -5,16 +5,16 @@
 import {dbContext} from '../../db/db'
 import {SchoolDao, SchoolInfo} from '../SchoolDao'
 import School from '../../db/models/school'
-import {where} from 'sequelize'
-import Op = require('sequelize/types/lib/operators')
+import {Op} from 'sequelize'
+import Registration from '../../db/models/registration'
 
 export class SchoolDaoImpl implements SchoolDao {
   constructor() {
     dbContext.init()
   }
 
-  create(entity: SchoolInfo): Promise<School> {
-    return undefined;
+  public async create(entity: SchoolInfo): Promise<SchoolInfo> {
+    return await School.create(entity)
   }
 
   public async delete(id: number) {
@@ -29,11 +29,15 @@ export class SchoolDaoImpl implements SchoolDao {
     return await School.findAll({ raw: true });
   }
 
-  findById(id: number): Promise<School> {
-    return undefined;
+  public async findById(id: number) {
+    return await School.findOne({
+      where: {
+        id,
+      },
+    })
   }
 
-  findBySchoolId(schoolId: string): Promise<School> {
+  findBySchoolId(schoolId: string): Promise<SchoolInfo> {
     return undefined;
   }
 

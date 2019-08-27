@@ -7,23 +7,43 @@ import {UserDao, UserInfo} from '../UserDao'
 import User from '../../db/models/user'
 import {SubjectDao, SubjectInfo} from '../SubjectDao'
 import Subject from '../../db/models/subject'
+import Speciality from '../../db/models/speciality'
+import {SpecialityInfo} from '../SpecialityDao'
+import Student from '../../db/models/student'
+import {StudentInfo} from '../StudentDao'
+import School from '../../db/models/school'
 
 export class SubjectDaoImpl implements SubjectDao {
   constructor() {
     dbContext.init()
   }
 
-  create(entity: SubjectInfo) {
+  public async create(entity: SubjectInfo): Promise<SubjectInfo> {
+    return await Subject.create(entity)
   }
 
-  delete(id: number) {
+  public async delete(id: number) {
+    return await Subject.destroy({
+      where: {
+        id
+      }
+    })
   }
 
-  findAll(): Promise<Array<Subject>> {
-    return undefined;
+  public async update(id, entity) {
+    return await Subject.update( entity, { where: { id } })
   }
 
-  findById(subjectId: number) {
+  public async findAll(): Promise<Array<SubjectInfo>> {
+    return await Subject.findAll({ raw: true });
+  }
+
+  public async findById(id: number) {
+    return await Subject.findOne({
+      where: {
+        id,
+      },
+    })
   }
 
   findBySubjectName(subjectName: string) {

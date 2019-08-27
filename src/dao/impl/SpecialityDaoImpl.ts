@@ -5,29 +5,43 @@
 import {dbContext} from '../../db/db'
 import {SpecialityDao, SpecialityInfo} from '../SpecialityDao'
 import Speciality from '../../db/models/speciality'
+import School from '../../db/models/school'
+import {SchoolInfo} from '../SchoolDao'
 
 export class SpecialityDaoImpl implements SpecialityDao {
   constructor() {
     dbContext.init()
   }
 
-  create(entity: SpecialityInfo) {
+  public async create(entity: SpecialityInfo): Promise<SpecialityInfo> {
+    return await Speciality.create(entity)
   }
 
-  delete(id: number) {
+  public async delete(id: number) {
+    return await Speciality.destroy({
+      where: {
+        id
+      }
+    })
   }
 
-  findAll(): Promise<Array<Speciality>> {
+  public async findAll(): Promise<Array<SpecialityInfo>> {
+    return await Speciality.findAll({ raw: true });
+  }
+
+  public async findById(id: number) {
+    return await Speciality.findOne({
+      where: {
+        id,
+      },
+    })
+  }
+
+  findByIdNumber(idNumber: string): Promise<Array<SpecialityInfo>> {
     return undefined;
   }
 
-  findById(id: number): Promise<Speciality> {
-    return undefined;
+  public async update(id, entity) {
+    return await Speciality.update( entity, { where: { id } })
   }
-
-  findByIdNumber(idNumber: string): Promise<Array<Speciality>> {
-    return undefined;
-  }
-
-
 }

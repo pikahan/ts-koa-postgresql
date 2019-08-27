@@ -2,13 +2,14 @@
  * @Description: 数据库表操作基础接口 UserDao.ts
  */
 import Student from '../db/models/student'
+import {SpecialityInfo} from './SpecialityDao'
 
 export interface StudentDao {
   /**
    *
    * @returns {Student}
    */
-  findAll(): Promise<Array<Student>>
+  findAll(): Promise<Array<StudentInfo>>
 
   /**
    * @param {number} id
@@ -33,6 +34,9 @@ export interface StudentDao {
    * @param {number} id
    */
   delete(id: number)
+
+  update(id: number, entity: StudentInfo)
+
 }
 export interface StudentInfo {
   id?: string

@@ -1,9 +1,10 @@
 import {router} from './router'
 import * as Koa from 'koa'
 import * as cors from 'koa2-cors'
+import * as koaBody from 'koa-body'
 
 const app = new Koa()
-
+app.use(koaBody())
 app.use(cors())
 app
   .use(router.routes())

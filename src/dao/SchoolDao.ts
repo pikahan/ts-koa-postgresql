@@ -4,6 +4,7 @@
 
 
 import School from '../db/models/school'
+import {SpecialityInfo} from './SpecialityDao'
 
 export interface SchoolDao {
   /**
@@ -16,13 +17,13 @@ export interface SchoolDao {
    *
    * @param {string} id
    */
-  findById(id: number): Promise<School>
+  findById(id: number): Promise<SchoolInfo>
 
   /**
    *
    * @param {string} schoolId
    */
-  findBySchoolId(schoolId: string): Promise<School>
+  findBySchoolId(schoolId: string): Promise<SchoolInfo>
 
   /**
    *
@@ -35,7 +36,7 @@ export interface SchoolDao {
    * 创建
    * @param {UserInfo} entity
    */
-  create(entity: SchoolInfo): Promise<School>
+  create(entity: SchoolInfo): Promise<SchoolInfo>
 
   /**
    * @name 查询

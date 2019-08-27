@@ -11,7 +11,7 @@ export interface SchoolService {
    *
    * @returns {User}
    */
-  findAll(): Promise<Array<School>>
+  findAll(): Promise<Array<SchoolInfo>>
 
   /**
    *
@@ -36,7 +36,7 @@ export interface SchoolService {
    * 创建
    * @param {UserInfo} entity
    */
-  create(entity: SchoolInfo): Promise<School>
+  create(entity: SchoolInfo): Promise<SchoolInfo>
 
   /**
    * @name 查询
