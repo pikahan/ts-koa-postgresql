@@ -38,10 +38,8 @@ export class SchoolServiceImpl implements SchoolService {
     return undefined;
   }
 
-  findBySchoolName(schoolName: string): Promise<Array<School>> {
-    return undefined;
+  public async findBySchoolName(schoolName: string): Promise<Array<SchoolInfo>> {
+    return await this.schoolDao.findBySchoolName(schoolName)
   }
-
-
 
 }

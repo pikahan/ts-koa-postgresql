@@ -3,10 +3,12 @@
  */
 
 import {dbContext} from '../../db/db'
-import {UserDao, UserInfo} from '../UserDao'
+import {LoginStatus, RegisterStatus, UserDao, UserInfo} from '../UserDao'
 import User from '../../db/models/user'
 
+
 export class UserDaoImpl implements UserDao {
+
   constructor() {
     dbContext.init()
   }
@@ -23,18 +25,22 @@ export class UserDaoImpl implements UserDao {
     return results
   }
 
+
+
+
+
   /**
    *
    * @param {string} username
    * @returns {Promise<Model | null>}
    */
-  public async findByName(username: string) {
+  public async findByUsername(username: string) {
     const results = await User.findOne({
       where: {
         username,
       },
     })
-    return results
+    return results as UserInfo
   }
 
   /**
@@ -61,5 +67,9 @@ export class UserDaoImpl implements UserDao {
       },
     })
     return results
+  }
+
+  public async update(id: number , entity: UserInfo) {
+    return await User.update( entity, { where: { id } })
   }
 }

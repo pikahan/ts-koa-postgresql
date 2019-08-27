@@ -1,8 +1,7 @@
 /*
  * @Description: 数据库表操作基础接口 UserDao.ts
  */
-import {SchoolDaoImpl} from '../../dao/impl/SchoolDaoImpl'
-import {SchoolService} from '../SchoolService'
+
 import {SpecialityService} from '../SpecialityService'
 import {SpecialityDao, SpecialityInfo} from '../../dao/SpecialityDao'
 import {SpecialityDaoImpl} from '../../dao/impl/SpecialityDaoImpl'

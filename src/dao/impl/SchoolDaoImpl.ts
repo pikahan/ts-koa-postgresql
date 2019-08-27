@@ -5,6 +5,8 @@
 import {dbContext} from '../../db/db'
 import {SchoolDao, SchoolInfo} from '../SchoolDao'
 import School from '../../db/models/school'
+import {where} from 'sequelize'
+import Op = require('sequelize/types/lib/operators')
 
 export class SchoolDaoImpl implements SchoolDao {
   constructor() {
@@ -15,11 +17,16 @@ export class SchoolDaoImpl implements SchoolDao {
     return undefined;
   }
 
-  delete(id: number) {
+  public async delete(id: number) {
+    return await School.destroy({
+      where: {
+        id
+      }
+    })
   }
 
-  findAll(): Promise<Array<School>> {
-    return undefined;
+  public async findAll(): Promise<Array<SchoolInfo>> {
+    return await School.findAll({ raw: true });
   }
 
   findById(id: number): Promise<School> {
@@ -30,8 +37,17 @@ export class SchoolDaoImpl implements SchoolDao {
     return undefined;
   }
 
-  findBySchoolName(schoolName: string): Promise<Array<School>> {
-    return undefined;
+  public async findBySchoolName(schoolName: string): Promise<Array<SchoolInfo>> {
+    return await School.findAll({
+      raw: true,
+      where: {
+        schoolName: { [Op.like]: `%${schoolName}%` }
+      }
+    })
+  }
+
+  public async update(id, entity) {
+    return await School.update( entity, { where: { id } })
   }
 
 }

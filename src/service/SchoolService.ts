@@ -30,7 +30,7 @@ export interface SchoolService {
    * @param {string} schoolName
    * @returns {Promise<Array<School>>}
    */
-  findBySchoolName(schoolName: string): Promise<Array<School>>
+  findBySchoolName(schoolName: string): Promise<Array<SchoolInfo>>
 
   /**
    * 创建

@@ -25,7 +25,4 @@ export class XueKaoServiceImpl implements XuekaoService {
 
   findByIdNumber(idNumber: string) {
   }
-
-
-
 }

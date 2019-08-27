@@ -3,14 +3,13 @@
  * @version:
  */
 
-
-import User from '../db/models/user'
+import {LoginStatus, RegisterStatus, UserInfo} from '../dao/UserDao'
 
 export interface UserService {
   /**
    *
    */
-  findAll(): Promise<Array<User>>
+  findAll(): Promise<Array<UserInfo>>
 
   /**
    *
@@ -24,11 +23,17 @@ export interface UserService {
    * @param {string} password
    * @param {string} level
    */
-  create(username: string, password: string, level: number)
+  create(username: string, password: string, level: string)
 
   /**
    *
    * @param {String} id
    */
   delete(id: String)
+
+  update(id: number, username: string, pwd: string, level: string)
+
+  register(username: string, pwd: string): Promise<RegisterStatus>
+
+  login(username: string, pwd: string): Promise<LoginStatus>
 }

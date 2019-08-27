@@ -10,7 +10,7 @@ export interface SchoolDao {
    *
    * @returns {User}
    */
-  findAll(): Promise<Array<School>>
+  findAll(): Promise<Array<SchoolInfo>>
 
   /**
    *
@@ -29,7 +29,7 @@ export interface SchoolDao {
    * @param {string} schoolName
    * @returns {Promise<Array<School>>}
    */
-  findBySchoolName(schoolName: string): Promise<Array<School>>
+  findBySchoolName(schoolName: string): Promise<Array<SchoolInfo>>
 
   /**
    * 创建
@@ -42,6 +42,8 @@ export interface SchoolDao {
    * @param {number} id
    */
   delete(id: number)
+
+  update(id: number, entity: SchoolInfo)
 }
 export interface SchoolInfo {
   id?: string
@@ -49,5 +51,5 @@ export interface SchoolInfo {
   schoolName: string
   province: string
   city: string
-  description: string
+  description?: string
 }

@@ -6,9 +6,28 @@ import * as Router from 'koa-router'
 import {STATUS} from '../util/constant'
 import {UserService} from '../service/UserService'
 import {UserServiceImpl} from '../service/impl/UserServiceImpl'
+import {toMd5} from '../util/help'
 
 const router = new Router()
 const userService: UserService = new UserServiceImpl()
+
+// login
+router.get('/login', async ctx => {
+  const { username, pwd } = ctx.query
+  ctx.body = await userService.login(username, pwd)
+})
+
+// register
+router.get('/register', async ctx => {
+  const { username, pwd } = ctx.query
+  ctx.body = await userService.register(username, pwd)
+})
+
+// update
+router.get('/update', async ctx => {
+  const { id, username, pwd, level } = ctx.query
+  ctx.body = await userService.update(id, username, pwd, level)
+})
 
 // 获取所有用户
 router.get('/', async (ctx) => {
@@ -33,7 +52,7 @@ router.get('/:username', async (ctx) => {
 router.get('/:username/:pwd', async (ctx) => {
   const {username, pwd} = ctx.params
   try {
-    const user = await userService.create(username, pwd, 1)
+    const user = await userService.create(username, pwd, 'admin')
     ctx.body = user
       ? {
         code: STATUS.OK,

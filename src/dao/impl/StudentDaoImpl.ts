@@ -26,8 +26,4 @@ export class StudentDaoImpl implements StudentDao {
 
   findByIdNumber(idNumber: string) {
   }
-
-
-
-
 }
