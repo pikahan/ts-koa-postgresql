@@ -5,20 +5,22 @@
 
 import Major from '../db/models/major'
 import Promise from 'sequelize/types/lib/promise'
-import {MajorInfo} from '../dao/MajorDao'
+import {MajorInfo, MajorViewInfo} from '../dao/MajorDao'
+import {QueryOption} from '../util/help'
+import {Response} from '../util/type'
 
 export interface MajorService {
   /**
    *
    * @returns {Major}
    */
-  findAll(): Promise<Array<Major>>
+  findAll(queryOption: QueryOption): Promise<Response<Array<MajorInfo>>>
 
   /**
    *
    * @param {string} majorId
    */
-  findByMajorId(majorId: string): Promise<Major>
+  findByMajorId(majorId: string): Promise<Response<MajorInfo>>
 
   /**
    *
@@ -39,11 +41,13 @@ export interface MajorService {
    * 创建
    * @param {MajorInfo} entity
    */
-  create(entity: MajorInfo): Promise<Major>
+  create(entity: MajorViewInfo): Promise<Response<MajorInfo>>
 
   /**
    * @name 查询
    * @param {number} id
    */
   delete(id: number)
+
+  update(id, entity: MajorViewInfo)
 }

@@ -3,6 +3,7 @@ import {RegistrationService} from '../RegistrationService'
 import Registration from '../../db/models/registration'
 import {RegistrationDao, RegistrationInfo} from '../../dao/RegistrationDao'
 import {RegistrationDaoImpl} from '../../dao/impl/RegistrationDaoImpl'
+import {QueryOption} from '../../util/help'
 
 /*
  * @Description: service实现类 UserServiceImpl.ts
@@ -19,8 +20,8 @@ export class RegistrationServiceImpl implements RegistrationService {
   /**
    *
    */
-  findAll() {
-    return this.registrationDao.findAll()
+  findAll(queryOption: QueryOption) {
+    return this.registrationDao.findAll(queryOption)
   }
 
   /**

@@ -6,13 +6,18 @@
 import Major from '../db/models/major'
 import Promise from 'sequelize/types/lib/promise'
 import {UserInfo} from './UserDao'
+import {SchoolInfo} from './SchoolDao'
+import {QueryOption} from '../util/help'
 
 export interface MajorDao {
   /**
    *
    * @returns {Major}
    */
-  findAll(): Promise<Array<MajorInfo>>
+  findAll(queryOption: QueryOption): Promise<Array<MajorInfo>>
+
+
+  findAllWithLimitation(currPage: number, limit: number): Promise<Array<MajorInfo>>
 
   /**
    *
@@ -33,7 +38,7 @@ export interface MajorDao {
    * @param {number} schoolId
    * @returns {Promise<Array<Major>>}
    */
-  findBySchoolId(schoolId: number): Promise<Array<MajorInfo>>
+  findBySchoolName(schoolName: string): Promise<Array<SchoolInfo>>
 
   /**
    * 创建
@@ -51,9 +56,15 @@ export interface MajorDao {
 
 }
 export interface MajorInfo {
-  id?: string
-  majorId: string
+  id?: number
+  majorTypeId: number
+  schoolId: string
+}
+
+export interface MajorViewInfo {
+  id?: number
+  majorTypeId: number
   majorName: string
   majorType: string
-  schoolId: string
+  schoolName: string
 }

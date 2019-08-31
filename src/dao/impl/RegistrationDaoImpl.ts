@@ -5,6 +5,7 @@
 import {dbContext} from '../../db/db'
 import {RegistrationDao, RegistrationInfo} from '../RegistrationDao'
 import Registration from '../../db/models/registration'
+import {queryOption2SequelizeQueryOption} from '../../util/help'
 
 export class RegistrationDaoImpl implements RegistrationDao {
   constructor() {
@@ -15,12 +16,12 @@ export class RegistrationDaoImpl implements RegistrationDao {
    * @name 查询
    * @returns {Promise<Model[]>}
    */
-  public async findAll() {
-    const results = await Registration.findAll({
-      raw: true,
-    })
+  public async findAll(queryOption) {
+    return await Registration.findAll(queryOption2SequelizeQueryOption(queryOption));
+  }
 
-    return results
+  public async findAllWithLimitation(currPage: number, limit: number) {
+    return await Registration.findAll({ raw: true, limit, offset: currPage })
   }
 
   /**

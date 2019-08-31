@@ -9,7 +9,7 @@ export interface UserService {
   /**
    *
    */
-  findAll(): Promise<Array<UserInfo>>
+  findAll(currPage?: number, pageSize?: number): Promise<Array<UserInfo>>
 
   /**
    *
@@ -29,7 +29,7 @@ export interface UserService {
    *
    * @param {String} id
    */
-  delete(id: String)
+  delete(id: number)
 
   update(id: number, username: string, pwd: string, level: string)
 

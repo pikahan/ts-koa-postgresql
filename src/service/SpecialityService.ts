@@ -9,7 +9,7 @@ export interface SpecialityService {
    *
    * @returns {Student}
    */
-  findAll(): Promise<Array<Speciality>>
+  findAll(currPage?: number, pageSize?: number): Promise<Array<Speciality>>
 
   /**
    * @param {number} id

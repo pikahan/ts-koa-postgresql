@@ -12,13 +12,8 @@ export default class Major extends Model<Major> {
   id: number
 
   @Column
-  majorId: number
+  majorTypeId: number
 
-  @Column
-  majorName: string
-
-  @Column
-  majorType: string
 
   @Column
   schoolId: number

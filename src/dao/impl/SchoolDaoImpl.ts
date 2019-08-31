@@ -6,7 +6,8 @@ import {dbContext} from '../../db/db'
 import {SchoolDao, SchoolInfo} from '../SchoolDao'
 import School from '../../db/models/school'
 import {Op} from 'sequelize'
-import Registration from '../../db/models/registration'
+import {PAGE_SIZE} from '../../util/constant'
+import {QueryOption, queryOption2SequelizeQueryOption} from '../../util/help'
 
 export class SchoolDaoImpl implements SchoolDao {
   constructor() {
@@ -25,8 +26,13 @@ export class SchoolDaoImpl implements SchoolDao {
     })
   }
 
-  public async findAll(): Promise<Array<SchoolInfo>> {
-    return await School.findAll({ raw: true });
+
+  public async findAll(queryOption: QueryOption): Promise<Array<SchoolInfo>> {
+    return await School.findAll(queryOption2SequelizeQueryOption(queryOption));
+  }
+
+  public async findAllWithLimitation(currPage: number, limit: number) {
+    return await School.findAll({ raw: true, limit, offset: currPage })
   }
 
   public async findById(id: number) {

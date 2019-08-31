@@ -3,6 +3,7 @@
  */
 import XueKao from '../db/models/xuekao'
 import {XuanKaoInfo} from './XuanKaoDao'
+import {SchoolInfo} from './SchoolDao'
 
 export interface XuekaoDao {
   /**
@@ -10,6 +11,9 @@ export interface XuekaoDao {
    * @returns {XueKao}
    */
   findAll(): Promise<Array<XueKaoInfo>>
+
+
+  findAllWithLimitation(currPage: number, limit: number): Promise<Array<XueKaoInfo>>
 
   /**
    * @name 通过身份证查询

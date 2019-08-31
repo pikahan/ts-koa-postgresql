@@ -11,6 +11,9 @@ export interface SpecialityDao {
    */
   findAll(): Promise<Array<SpecialityInfo>>
 
+
+  findAllWithLimitation(currPage: number, limit: number): Promise<Array<SpecialityInfo>>
+
   /**
    * @param {number} id
    */

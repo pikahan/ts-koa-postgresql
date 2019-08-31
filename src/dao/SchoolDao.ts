@@ -4,14 +4,19 @@
 
 
 import School from '../db/models/school'
-import {SpecialityInfo} from './SpecialityDao'
+import {QueryOption} from '../util/help'
 
 export interface SchoolDao {
   /**
    *
    * @returns {User}
    */
-  findAll(): Promise<Array<SchoolInfo>>
+  findAll(queryOption: QueryOption): Promise<Array<SchoolInfo>>
+
+
+  findAllWithLimitation(currPage: number, limit: number): Promise<Array<SchoolInfo>>
+
+
 
   /**
    *
@@ -47,10 +52,10 @@ export interface SchoolDao {
   update(id: number, entity: SchoolInfo)
 }
 export interface SchoolInfo {
-  id?: string
-  schoolId: string
-  schoolName: string
-  province: string
-  city: string
+  id?: number
+  schoolId?: string
+  schoolName?: string
+  province?: string
+  city?: string
   description?: string
 }

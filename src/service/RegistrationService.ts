@@ -4,14 +4,14 @@
  */
 
 
-import Registration from '../db/models/registration'
 import {RegistrationInfo} from '../dao/RegistrationDao'
+import {QueryOption} from '../util/help'
 
 export interface RegistrationService {
   /**
    *
    */
-  findAll(): Promise<Array<Registration>>
+  findAll(queryOption: QueryOption): Promise<Array<RegistrationInfo>>
 
   /**
    *

@@ -10,14 +10,13 @@ const router = new Router()
 const registrationService: RegistrationService = new RegistrationServiceImpl()
 
 router.get('/', async (ctx) => {
-  ctx.body = await registrationService.findAll()
+  ctx.body = await registrationService.findAll({} as any)
 
 })
 
 router.get('/:id', async (ctx) => {
   const { id } = ctx.params
   ctx.body = await registrationService.findById(id)
-
 })
 
 export default router

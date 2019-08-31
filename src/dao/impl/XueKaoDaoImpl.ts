@@ -38,6 +38,10 @@ export class XueKaoDaoImpl implements XuekaoDao {
     return await XueKao.findAll({ raw: true });
   }
 
+  public async findAllWithLimitation(currPage: number, limit: number) {
+    return await XueKao.findAll({ raw: true, limit, offset: currPage })
+  }
+
   findByIdNumber(idNumber: string) {
   }
 

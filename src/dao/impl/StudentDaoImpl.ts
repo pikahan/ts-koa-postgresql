@@ -5,9 +5,9 @@
 import {dbContext} from '../../db/db'
 import {StudentDao, StudentInfo} from '../StudentDao'
 import Student from '../../db/models/student'
-import Speciality from '../../db/models/speciality'
-import {SpecialityInfo} from '../SpecialityDao'
 import School from '../../db/models/school'
+import {QueryOption, queryOption2SequelizeQueryOption} from '../../util/help'
+
 
 export class StudentDaoImpl implements StudentDao {
   constructor() {
@@ -30,8 +30,12 @@ export class StudentDaoImpl implements StudentDao {
     })
   }
 
-  public async findAll(): Promise<Array<StudentInfo>> {
-    return await Student.findAll({ raw: true });
+  public async findAll(queryOption: QueryOption): Promise<Array<StudentInfo>> {
+    return await Student.findAll(queryOption2SequelizeQueryOption(queryOption));
+  }
+
+  public async findAllWithLimitation(currPage: number, limit: number) {
+    return await Student.findAll({ raw: true, limit, offset: currPage })
   }
 
   public async findById(id: number) {

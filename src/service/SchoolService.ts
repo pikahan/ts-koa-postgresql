@@ -5,25 +5,27 @@
 
 import School from '../db/models/school'
 import {SchoolInfo} from '../dao/SchoolDao'
+import {QueryOption} from '../util/help'
+import {Response} from '../util/type'
 
 export interface SchoolService {
   /**
    *
    * @returns {User}
    */
-  findAll(): Promise<Array<SchoolInfo>>
+  findAll(queryOption: QueryOption): Promise<Response<Array<SchoolInfo>>>
 
   /**
    *
    * @param {string} id
    */
-  findById(id: number): Promise<School>
+  findById(id: number): Promise<SchoolInfo>
 
   /**
    *
    * @param {string} schoolId
    */
-  findBySchoolId(schoolId: string): Promise<School>
+  findBySchoolId(schoolId: string): Promise<SchoolInfo>
 
   /**
    *
@@ -36,11 +38,14 @@ export interface SchoolService {
    * 创建
    * @param {UserInfo} entity
    */
-  create(entity: SchoolInfo): Promise<SchoolInfo>
+  create(entity: SchoolInfo): Promise<Response<SchoolInfo>>
 
   /**
    * @name 查询
    * @param {number} id
    */
   delete(id: number)
+
+  update(id: number, entity: SchoolInfo): Promise<Response<SchoolInfo>>
 }
+

@@ -6,6 +6,7 @@ import {SubjectService} from '../SubjectService'
 import {SubjectDao, SubjectInfo} from '../../dao/SubjectDao'
 import {SubjectDaoImpl} from '../../dao/impl/SubjectDaoImpl'
 import Subject from '../../db/models/subject'
+import {QueryOption} from '../../util/help'
 
 export class SubjectServiceImpl implements SubjectService {
   private subjectDao: SubjectDao
@@ -20,8 +21,8 @@ export class SubjectServiceImpl implements SubjectService {
   delete(id: number) {
   }
 
-  findAll(): Promise<Array<Subject>> {
-    return undefined;
+  public async findAll(queryOption: QueryOption): Promise<Array<SubjectInfo>> {
+    return await this.subjectDao.findAll(queryOption)
   }
 
   findById(subjectId: number) {

@@ -12,6 +12,7 @@ import {SpecialityInfo} from '../SpecialityDao'
 import Student from '../../db/models/student'
 import {StudentInfo} from '../StudentDao'
 import School from '../../db/models/school'
+import {queryOption2SequelizeQueryOption} from '../../util/help'
 
 export class SubjectDaoImpl implements SubjectDao {
   constructor() {
@@ -34,8 +35,12 @@ export class SubjectDaoImpl implements SubjectDao {
     return await Subject.update( entity, { where: { id } })
   }
 
-  public async findAll(): Promise<Array<SubjectInfo>> {
-    return await Subject.findAll({ raw: true });
+  public async findAll(queryOption): Promise<Array<SubjectInfo>> {
+    return await Subject.findAll(queryOption2SequelizeQueryOption(queryOption));
+  }
+
+  public async findAllWithLimitation(currPage: number, limit: number) {
+    return await Subject.findAll({ raw: true, limit, offset: currPage })
   }
 
   public async findById(id: number) {

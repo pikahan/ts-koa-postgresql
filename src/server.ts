@@ -4,8 +4,8 @@ import * as cors from 'koa2-cors'
 import * as koaBody from 'koa-body'
 
 const app = new Koa()
-app.use(koaBody())
 app.use(cors())
+app.use(koaBody())
 app
   .use(router.routes())
   .use(router.allowedMethods())

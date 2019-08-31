@@ -9,7 +9,7 @@ export interface XuankaoService {
    *
    * @returns {XuanKao}
    */
-  findAll(): Promise<Array<XuanKao>>
+  findAll(currPage?: number, pageSize?: number): Promise<Array<XuanKao>>
 
   /**
    * @name 通过身份证查询

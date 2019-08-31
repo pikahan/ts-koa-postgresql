@@ -16,3 +16,5 @@ export enum RegisterStatusCode {
 }
 
 export const SALT = 'hello'
+
+export const PAGE_SIZE = 10

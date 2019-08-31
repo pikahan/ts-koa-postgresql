@@ -37,6 +37,10 @@ export class XuanKaoDaoImpl implements XuankaoDao {
     return await XuanKao.findAll({ raw: true });
   }
 
+  public async findAllWithLimitation(currPage: number, limit: number) {
+    return await XuanKao.findAll({ raw: true, limit, offset: currPage })
+  }
+
   findByIdNumber(idNumber: string) {
   }
 

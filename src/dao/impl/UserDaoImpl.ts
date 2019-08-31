@@ -5,6 +5,7 @@
 import {dbContext} from '../../db/db'
 import {LoginStatus, RegisterStatus, UserDao, UserInfo} from '../UserDao'
 import User from '../../db/models/user'
+import School from '../../db/models/school'
 
 
 export class UserDaoImpl implements UserDao {
@@ -25,9 +26,9 @@ export class UserDaoImpl implements UserDao {
     return results
   }
 
-
-
-
+  public async findAllWithLimitation(currPage: number, limit: number) {
+    return await User.findAll({ raw: true, limit, offset: currPage })
+  }
 
   /**
    *

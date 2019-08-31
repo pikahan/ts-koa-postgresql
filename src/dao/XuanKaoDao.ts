@@ -3,6 +3,7 @@
  */
 import XuanKao from '../db/models/xuankao'
 import {UserInfo} from './UserDao'
+import {SchoolInfo} from './SchoolDao'
 
 export interface XuankaoDao {
   /**
@@ -10,6 +11,9 @@ export interface XuankaoDao {
    * @returns {XuanKao}
    */
   findAll(): Promise<Array<XuanKaoInfo>>
+
+
+  findAllWithLimitation(currPage: number, limit: number): Promise<Array<XuanKaoInfo>>
 
   /**
    * @name 通过身份证查询

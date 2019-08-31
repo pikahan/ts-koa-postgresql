@@ -15,7 +15,7 @@ export default class Registration extends Model<Registration> {
   schoolId: number
 
   @Column
-  year: string
+  year: number
 
   @Column
   conditions: string

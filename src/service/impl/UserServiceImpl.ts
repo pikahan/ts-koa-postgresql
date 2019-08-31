@@ -47,8 +47,8 @@ export class UserServiceImpl implements UserService {
    * @param {String} id
    * @returns {any}
    */
-  public delete(id: String) {
-    return this.userDao.delete(~~id)
+  public delete(id: number) {
+    return this.userDao.delete(id)
   }
 
   public async login(username: string, pwd: string): Promise<LoginStatus> {

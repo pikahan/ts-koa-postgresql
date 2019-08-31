@@ -5,8 +5,6 @@
 import {dbContext} from '../../db/db'
 import {SpecialityDao, SpecialityInfo} from '../SpecialityDao'
 import Speciality from '../../db/models/speciality'
-import School from '../../db/models/school'
-import {SchoolInfo} from '../SchoolDao'
 
 export class SpecialityDaoImpl implements SpecialityDao {
   constructor() {
@@ -27,6 +25,10 @@ export class SpecialityDaoImpl implements SpecialityDao {
 
   public async findAll(): Promise<Array<SpecialityInfo>> {
     return await Speciality.findAll({ raw: true });
+  }
+
+  public async findAllWithLimitation(currPage: number, limit: number) {
+    return await Speciality.findAll({ raw: true, limit, offset: currPage })
   }
 
   public async findById(id: number) {

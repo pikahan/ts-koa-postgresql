@@ -3,6 +3,7 @@
  */
 import User from '../db/models/user'
 import {LoginStatusCode, RegisterStatusCode} from '../util/constant'
+import {SchoolInfo} from './SchoolDao'
 
 export interface UserDao {
   /**
@@ -10,6 +11,9 @@ export interface UserDao {
    * @returns {User}
    */
   findAll(): Promise<Array<UserInfo>>
+
+
+  findAllWithLimitation(currPage: number, limit: number): Promise<Array<UserInfo>>
 
   /**
    * @name 通过username查询

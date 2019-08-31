@@ -5,13 +5,18 @@
 
 import Registration from '../db/models/registration'
 import {MajorInfo} from './MajorDao'
+import {SchoolInfo} from './SchoolDao'
+import {QueryOption} from '../util/help'
 
 export interface RegistrationDao {
   /**
    *
    * @returns {User}
    */
-  findAll(): Promise<Array<RegistrationInfo>>
+  findAll(queryOption: QueryOption): Promise<Array<RegistrationInfo>>
+
+
+  findAllWithLimitation(currPage: number, limit: number): Promise<Array<RegistrationInfo>>
 
   /**
    *

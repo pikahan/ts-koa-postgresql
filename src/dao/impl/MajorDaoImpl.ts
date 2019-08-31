@@ -5,11 +5,12 @@
 import {dbContext} from '../../db/db'
 import {MajorDao, MajorInfo} from '../MajorDao'
 import Major from '../../db/models/major'
-import School from '../../db/models/school'
-import {SchoolInfo} from '../SchoolDao'
-import User from '../../db/models/user'
-import {UserInfo} from '../UserDao'
 import {Op} from 'sequelize'
+import {queryOption2SequelizeQueryOption} from '../../util/help'
+import Major_view from '../../db/models/major_view'
+import Major_type from '../../db/models/major_type'
+import {SchoolInfo} from '../SchoolDao'
+import School from '../../db/models/school'
 
 export class MajorDaoImpl implements MajorDao {
   constructor() {
@@ -28,8 +29,12 @@ export class MajorDaoImpl implements MajorDao {
     })
   }
 
-  public async findAll(): Promise<Array<MajorInfo>> {
-    return await Major.findAll({ raw: true });
+  public async findAll(queryOption): Promise<Array<MajorInfo>> {
+    return await Major_view.findAll(queryOption2SequelizeQueryOption(queryOption));
+  }
+
+  public async findAllWithLimitation(currPage: number, limit: number) {
+    return await Major.findAll({ raw: true, limit, offset: currPage })
   }
 
   public async findByMajorId(majorId: string): Promise<MajorInfo> {
@@ -37,16 +42,16 @@ export class MajorDaoImpl implements MajorDao {
   }
 
   public async findByMajorName(majorName: string): Promise<Array<MajorInfo>> {
-    return await Major.findAll({
+    return await Major_type.findOne({
       raw: true,
       where: {
-        majorName: { [Op.like]: `%${majorName}%` }
+        majorName
       }
     })
   }
 
-  public async findBySchoolId(schoolId: number): Promise<Array<MajorInfo>> {
-    return await Major.findAll({ raw: true, where: { schoolId } });
+  public async findBySchoolName(schoolName: string): Promise<Array<SchoolInfo>> {
+    return await School.findOne({ raw: true, where: { schoolName } });
   }
 
   public async update(id: number , entity: MajorInfo) {

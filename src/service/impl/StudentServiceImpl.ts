@@ -5,7 +5,7 @@
 import {StudentService} from '../StudentService'
 import {StudentDao, StudentInfo} from '../../dao/StudentDao'
 import {StudentDaoImpl} from '../../dao/impl/StudentDaoImpl'
-import Student from '../../db/models/student'
+import {QueryOption} from '../../util/help'
 
 export class StudentServiceImpl implements StudentService {
   private studentDao: StudentDao
@@ -20,8 +20,8 @@ export class StudentServiceImpl implements StudentService {
   delete(id: number) {
   }
 
-  findAll(): Promise<Array<Student>> {
-    return undefined;
+  findAll(queryOption: QueryOption): Promise<Array<StudentInfo>> {
+    return this.studentDao.findAll(queryOption)
   }
 
   findById(id: number) {

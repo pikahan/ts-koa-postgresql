@@ -3,13 +3,17 @@
  */
 import Student from '../db/models/student'
 import {SpecialityInfo} from './SpecialityDao'
+import {QueryOption} from '../util/help'
 
 export interface StudentDao {
   /**
    *
    * @returns {Student}
    */
-  findAll(): Promise<Array<StudentInfo>>
+  findAll(queryOption: QueryOption): Promise<Array<StudentInfo>>
+
+
+  findAllWithLimitation(currPage: number, limit: number): Promise<Array<StudentInfo>>
 
   /**
    * @param {number} id
