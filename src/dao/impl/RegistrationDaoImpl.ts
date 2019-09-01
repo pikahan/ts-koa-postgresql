@@ -6,6 +6,7 @@ import {dbContext} from '../../db/db'
 import {RegistrationDao, RegistrationInfo} from '../RegistrationDao'
 import Registration from '../../db/models/registration'
 import {queryOption2SequelizeQueryOption} from '../../util/help'
+import RegistrationView from '../../db/models/registration_view'
 
 export class RegistrationDaoImpl implements RegistrationDao {
   constructor() {
@@ -17,7 +18,7 @@ export class RegistrationDaoImpl implements RegistrationDao {
    * @returns {Promise<Model[]>}
    */
   public async findAll(queryOption) {
-    return await Registration.findAll(queryOption2SequelizeQueryOption(queryOption));
+    return await RegistrationView.findAll(queryOption2SequelizeQueryOption(queryOption));
   }
 
   public async findAllWithLimitation(currPage: number, limit: number) {

@@ -6,6 +6,7 @@ import {dbContext} from '../../db/db'
 import {EnrollmentDao, EnrollmentInfo} from '../EnrollmentDao'
 import Enrollment from '../../db/models/enrollment'
 import {QueryOption, queryOption2SequelizeQueryOption} from '../../util/help'
+import EnrollmentView from '../../db/models/enrollment_view'
 
 export class EnrollmentDaoImpl implements EnrollmentDao {
   constructor() {
@@ -25,7 +26,7 @@ export class EnrollmentDaoImpl implements EnrollmentDao {
   }
 
   public async findAll(queryOption: QueryOption): Promise<Array<EnrollmentInfo>> {
-    return await Enrollment.findAll(queryOption2SequelizeQueryOption(queryOption));
+    return await EnrollmentView.findAll(queryOption2SequelizeQueryOption(queryOption));
   }
 
   public async findAllWithLimitation(currPage: number, limit: number) {

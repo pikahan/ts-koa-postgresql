@@ -7,6 +7,9 @@ import userRouter from './userRouter'
 import registrationRouter from './registrationRouter'
 import schoolRouter from './schoolRouter'
 import majorRouter from './majorRouter'
+import enrollmentRouter from './enrollmentRouter'
+import subjectRouter from './subjectRouter'
+
 
 const router = new Router({
   prefix: '/api',
@@ -24,6 +27,11 @@ router.use('/user', userRouter.routes(), userRouter.allowedMethods())
 router.use('/registration', registrationRouter.routes(), registrationRouter.allowedMethods())
 
 router.use('/major', majorRouter.routes(), majorRouter.allowedMethods())
+
+router.use('/enrollment', enrollmentRouter.routes(), enrollmentRouter.allowedMethods())
+
+router.use('/subject', subjectRouter.routes(), subjectRouter.allowedMethods())
+
 
 
 export {router}

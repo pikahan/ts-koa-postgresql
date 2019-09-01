@@ -4,6 +4,8 @@ import Registration from '../../db/models/registration'
 import {RegistrationDao, RegistrationInfo} from '../../dao/RegistrationDao'
 import {RegistrationDaoImpl} from '../../dao/impl/RegistrationDaoImpl'
 import {QueryOption} from '../../util/help'
+import {Response, ResponseCode} from '../../util/type'
+import {EnrollmentInfo} from '../../dao/EnrollmentDao'
 
 /*
  * @Description: service实现类 UserServiceImpl.ts
@@ -20,8 +22,22 @@ export class RegistrationServiceImpl implements RegistrationService {
   /**
    *
    */
-  findAll(queryOption: QueryOption) {
-    return this.registrationDao.findAll(queryOption)
+  public async findAll(queryOption: QueryOption): Promise<Response<Array<RegistrationInfo>>> {
+    try {
+      const data = await this.registrationDao.findAll(queryOption)
+      console.log(data, 'test')
+      return {
+        code: ResponseCode.OK,
+        message: '查询成功',
+        response: data,
+      }
+    } catch (e) {
+      console.log(e)
+      return {
+        code: ResponseCode.ERROR,
+        message: '失败',
+      }
+    }
   }
 
   /**

@@ -5,14 +5,14 @@ import Subject from '../db/models/subject'
 import {SpecialityService} from './SpecialityService'
 import {SubjectInfo} from '../dao/SubjectDao'
 import {QueryOption} from '../util/help'
+import {Response} from '../util/type'
 
 export interface SubjectService {
   /**
    *
    * @returns {Subject}
    */
-  findAll(queryOption: QueryOption): Promise<Array<SubjectInfo>>
-
+  findAll(queryOption): Promise<Response<Array<SubjectInfo>>>
   /**
    * @param {string} subjectId
    */

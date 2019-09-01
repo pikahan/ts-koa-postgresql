@@ -12,9 +12,6 @@ export default class Subject extends Model<Subject> {
   id: number
 
   @Column
-  subjectId: number
-
-  @Column
   subjectName: string
 }
 

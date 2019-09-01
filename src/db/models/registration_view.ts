@@ -1,9 +1,9 @@
 import { Table, Column, Model } from 'sequelize-typescript'
 
 @Table({
-  tableName: 'registration'
+  tableName: 'registration_view'
 })
-export default class Registration extends Model<Registration> {
+export default class RegistrationView extends Model<RegistrationView> {
   @Column({
     comment: '自增ID',
     primaryKey: true,
@@ -12,8 +12,7 @@ export default class Registration extends Model<Registration> {
   id: number
 
   @Column
-  schoolId: number
-
+  schoolName: string
 
   @Column
   conditions: string

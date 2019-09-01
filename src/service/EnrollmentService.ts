@@ -5,7 +5,7 @@
 
 import Major from '../db/models/major'
 import Promise from 'sequelize/types/lib/promise'
-import {MajorInfo} from '../dao/MajorDao'
+import {MajorInfo, MajorViewInfo} from '../dao/MajorDao'
 import {EnrollmentInfo} from '../dao/EnrollmentDao'
 import {QueryOption} from '../util/help'
 
@@ -35,4 +35,7 @@ export interface EnrollmentService {
    * @param {number} id
    */
   delete(id: number)
+
+  update(id, entity: EnrollmentInfo)
+
 }

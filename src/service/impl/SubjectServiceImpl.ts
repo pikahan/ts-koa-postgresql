@@ -7,6 +7,8 @@ import {SubjectDao, SubjectInfo} from '../../dao/SubjectDao'
 import {SubjectDaoImpl} from '../../dao/impl/SubjectDaoImpl'
 import Subject from '../../db/models/subject'
 import {QueryOption} from '../../util/help'
+import {Response, ResponseCode} from '../../util/type'
+import {SchoolInfo} from '../../dao/SchoolDao'
 
 export class SubjectServiceImpl implements SubjectService {
   private subjectDao: SubjectDao
@@ -21,8 +23,20 @@ export class SubjectServiceImpl implements SubjectService {
   delete(id: number) {
   }
 
-  public async findAll(queryOption: QueryOption): Promise<Array<SubjectInfo>> {
-    return await this.subjectDao.findAll(queryOption)
+  public async findAll(queryOption): Promise<Response<Array<SubjectInfo>>> {
+    try {
+      const data = await this.subjectDao.findAll(queryOption)
+      return {
+        code: ResponseCode.OK,
+        message: '查询成功',
+        response: data
+      }
+    } catch (e) {
+      return {
+        code: ResponseCode.ERROR,
+        message: '失败',
+      }
+    }
   }
 
   findById(subjectId: number) {

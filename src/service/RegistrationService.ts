@@ -6,12 +6,13 @@
 
 import {RegistrationInfo} from '../dao/RegistrationDao'
 import {QueryOption} from '../util/help'
+import {Response} from '../util/type'
 
 export interface RegistrationService {
   /**
    *
    */
-  findAll(queryOption: QueryOption): Promise<Array<RegistrationInfo>>
+  findAll(queryOption: QueryOption): Promise<Response<Array<RegistrationInfo>>>
 
   /**
    *
