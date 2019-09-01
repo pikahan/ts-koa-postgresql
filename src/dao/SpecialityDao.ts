@@ -3,13 +3,15 @@
  */
 import Speciality from '../db/models/speciality'
 import {SchoolInfo} from './SchoolDao'
+import {MajorInfo} from './MajorDao'
+import {QueryOption} from '../util/help'
 
 export interface SpecialityDao {
   /**
    *
    * @returns {Student}
    */
-  findAll(): Promise<Array<SpecialityInfo>>
+  findAll(queryOption: QueryOption): Promise<Array<SpecialityInfo>>
 
 
   findAllWithLimitation(currPage: number, limit: number): Promise<Array<SpecialityInfo>>

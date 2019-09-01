@@ -27,6 +27,9 @@ export default class EnrollmentView extends Model<EnrollmentView> {
   tuition: number
 
   @Column
+  planNumber: number
+
+  @Column
   otherRequirement: string
 }
 

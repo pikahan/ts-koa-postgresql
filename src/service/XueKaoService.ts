@@ -3,13 +3,15 @@
  */
 import XueKao from '../db/models/xuekao'
 import {XueKaoInfo} from '../dao/XueKaoDao'
+import {Response} from '../util/type'
+import {QueryOption} from '../util/help'
 
 export interface XuekaoService {
   /**
    *
    * @returns {XueKao}
    */
-  findAll(currPage?: number, pageSize?: number): Promise<Array<XueKao>>
+  findAll(queryOption: QueryOption): Promise<Response<Array<XueKaoInfo>>>
 
   /**
    * @name 通过身份证查询

@@ -4,14 +4,14 @@
 import Student from '../db/models/student'
 import {StudentInfo} from '../dao/StudentDao'
 import {QueryOption} from '../util/help'
+import {Response} from '../util/type'
 
 export interface StudentService {
   /**
    *
    * @returns {Student}
    */
-  findAll(queryOption: QueryOption): Promise<Array<StudentInfo>>
-
+  findAll(queryOption): Promise<Response<Array<StudentInfo>>>
   /**
    * @param {number} id
    */

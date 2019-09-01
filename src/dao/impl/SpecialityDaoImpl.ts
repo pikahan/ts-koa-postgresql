@@ -5,6 +5,10 @@
 import {dbContext} from '../../db/db'
 import {SpecialityDao, SpecialityInfo} from '../SpecialityDao'
 import Speciality from '../../db/models/speciality'
+import School from '../../db/models/school'
+import {QueryOption, queryOption2SequelizeQueryOption} from '../../util/help'
+import {SchoolInfo} from '../SchoolDao'
+import SpecialityView from '../../db/models/speciality_view'
 
 export class SpecialityDaoImpl implements SpecialityDao {
   constructor() {
@@ -23,9 +27,10 @@ export class SpecialityDaoImpl implements SpecialityDao {
     })
   }
 
-  public async findAll(): Promise<Array<SpecialityInfo>> {
-    return await Speciality.findAll({ raw: true });
+  public async findAll(queryOption: QueryOption): Promise<Array<SpecialityInfo>> {
+    return await SpecialityView.findAll(queryOption2SequelizeQueryOption(queryOption));
   }
+
 
   public async findAllWithLimitation(currPage: number, limit: number) {
     return await Speciality.findAll({ raw: true, limit, offset: currPage })

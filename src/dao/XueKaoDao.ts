@@ -4,13 +4,14 @@
 import XueKao from '../db/models/xuekao'
 import {XuanKaoInfo} from './XuanKaoDao'
 import {SchoolInfo} from './SchoolDao'
+import {QueryOption} from '../util/help'
 
 export interface XuekaoDao {
   /**
    *
    * @returns {XueKao}
    */
-  findAll(): Promise<Array<XueKaoInfo>>
+  findAll(queryOption: QueryOption): Promise<Array<XueKaoInfo>>
 
 
   findAllWithLimitation(currPage: number, limit: number): Promise<Array<XueKaoInfo>>

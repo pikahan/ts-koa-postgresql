@@ -12,6 +12,10 @@ import {SubjectInfo} from '../SubjectDao'
 import XuanKao from '../../db/models/xuankao'
 import {XuanKaoInfo} from '../XuanKaoDao'
 import School from '../../db/models/school'
+import SpecialityView from '../../db/models/speciality_view'
+import {QueryOption, queryOption2SequelizeQueryOption} from '../../util/help'
+import {SpecialityInfo} from '../SpecialityDao'
+import XueKaoView from '../../db/models/xuekao_view'
 
 export class XueKaoDaoImpl implements XuekaoDao {
   constructor() {
@@ -34,8 +38,8 @@ export class XueKaoDaoImpl implements XuekaoDao {
     return await XueKao.update( entity, { where: { id } })
   }
 
-  public async findAll(): Promise<Array<XueKaoInfo>> {
-    return await XueKao.findAll({ raw: true });
+  public async findAll(queryOption: QueryOption): Promise<Array<XueKaoInfo>> {
+    return await XueKaoView.findAll(queryOption2SequelizeQueryOption(queryOption));
   }
 
   public async findAllWithLimitation(currPage: number, limit: number) {

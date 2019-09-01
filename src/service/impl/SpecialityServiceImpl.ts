@@ -6,6 +6,8 @@ import {SpecialityService} from '../SpecialityService'
 import {SpecialityDao, SpecialityInfo} from '../../dao/SpecialityDao'
 import {SpecialityDaoImpl} from '../../dao/impl/SpecialityDaoImpl'
 import Speciality from '../../db/models/speciality'
+import {Response, ResponseCode} from '../../util/type'
+import {SchoolInfo} from '../../dao/SchoolDao'
 
 export class SpecialityServiceImpl implements SpecialityService {
   private specialityDao: SpecialityDao
@@ -20,15 +22,28 @@ export class SpecialityServiceImpl implements SpecialityService {
   delete(id: number) {
   }
 
-  findAll(): Promise<Array<Speciality>> {
+  public async findAll(queryOption): Promise<Response<Array<SpecialityInfo>>> {
+    try {
+      const data = await this.specialityDao.findAll(queryOption)
+      return {
+        code: ResponseCode.OK,
+        message: '查询成功',
+        response: data
+      }
+    } catch (e) {
+      console.log(e)
+      return {
+        code: ResponseCode.ERROR,
+        message: '失败',
+      }
+    }
+  }
+
+  findById(id: number): Promise<SpecialityInfo> {
     return undefined;
   }
 
-  findById(id: number): Promise<Speciality> {
-    return undefined;
-  }
-
-  findByIdNumber(idNumber: string): Promise<Array<Speciality>> {
+  findByIdNumber(idNumber: string): Promise<Array<SpecialityInfo>> {
     return undefined;
   }
 }
