@@ -100,10 +100,22 @@ export class MajorServiceImpl implements MajorService {
         message: '删除成功',
       }
     } catch (e) {
-      return {
+      console.log(e)
+      const eMessage = e.toString()
+      const ret = {
         code: ResponseCode.ERROR,
-        message: '删除失败',
+        message: '删除失败'
       }
+
+      if (eMessage.indexOf('major_school_id_fkey') > -1) {
+        ret.message = '请先删除专业中包含此学校信息的记录'
+      }
+
+
+      if (eMessage.indexOf('enrollment_major_id_fkey') > -1) {
+        ret.message = '请先删除招生中包含此专业信息的记录'
+      }
+      return ret
     }
   }
 

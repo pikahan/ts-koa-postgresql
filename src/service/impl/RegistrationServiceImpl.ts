@@ -61,7 +61,22 @@ export class RegistrationServiceImpl implements RegistrationService {
    *
    * @param {number} id
    */
-  delete(id: number) {
-    return this.registrationDao.delete(id)
+  public async delete(id: number) {
+    try {
+      const data = await this.registrationDao.delete(id)
+      return {
+        code: ResponseCode.OK,
+        message: '删除成功',
+      }
+    } catch (e) {
+      console.log(e)
+      const eMessage = e.toString()
+      const ret = {
+        code: ResponseCode.ERROR,
+        message: '删除失败'
+      }
+
+      return ret
+    }
   }
 }

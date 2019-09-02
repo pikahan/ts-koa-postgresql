@@ -19,7 +19,23 @@ export class StudentServiceImpl implements StudentService {
   create(entity: StudentInfo) {
   }
 
-  delete(id: number) {
+  public async delete(id: number) {
+    try {
+      const data = await this.studentDao.delete(id)
+      return {
+        code: ResponseCode.OK,
+        message: '删除成功',
+      }
+    } catch (e) {
+      console.log(e)
+      const eMessage = e.toString()
+      const ret = {
+        code: ResponseCode.ERROR,
+        message: '删除失败'
+      }
+
+      return ret
+    }
   }
 
   public async findAll(queryOption): Promise<Response<Array<StudentInfo>>> {

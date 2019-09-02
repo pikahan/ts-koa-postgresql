@@ -3,6 +3,7 @@ import {LoginStatus, RegisterStatus, UserDao} from '../../dao/UserDao'
 import {UserDaoImpl} from '../../dao/impl/UserDaoImpl'
 import {LoginStatusCode, RegisterStatusCode} from '../../util/constant'
 import {toMd5} from '../../util/help'
+import {ResponseCode} from '../../util/type'
 
 /*
  * @Description: service实现类 UserServiceImpl.ts
@@ -47,8 +48,31 @@ export class UserServiceImpl implements UserService {
    * @param {String} id
    * @returns {any}
    */
-  public delete(id: number) {
-    return this.userDao.delete(id)
+  public async delete(id: number) {
+    try {
+      const data = await this.userDao.delete(id)
+      return {
+        code: ResponseCode.OK,
+        message: '删除成功',
+      }
+    } catch (e) {
+      console.log(e)
+      const eMessage = e.toString()
+      const ret = {
+        code: ResponseCode.ERROR,
+        message: '删除失败'
+      }
+
+      if (eMessage.indexOf('major_school_id_fkey') > -1) {
+        ret.message = '请先删除专业中包含此学校信息的记录'
+      }
+
+
+      if (eMessage.indexOf('enrollment_major_id_fkey') > -1) {
+        ret.message = '请先删除招生中包含此专业信息的记录'
+      }
+      return ret
+    }
   }
 
   public async login(username: string, pwd: string): Promise<LoginStatus> {

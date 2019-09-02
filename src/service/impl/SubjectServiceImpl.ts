@@ -20,9 +20,36 @@ export class SubjectServiceImpl implements SubjectService {
   create(entity: SubjectInfo) {
   }
 
-  delete(id: number) {
-  }
+  public async delete(id: number) {
+    try {
+      const data = await this.subjectDao.delete(id)
+      return {
+        code: ResponseCode.OK,
+        message: '删除成功'
+      }
+    } catch (e) {
+      console.log(e)
+      const eMessage = e.toString()
+      const ret = {
+        code: ResponseCode.ERROR,
+        message: '删除失败'
+      }
 
+      if (eMessage.indexOf('enrollment_subject_id_fkey') > -1) {
+        ret.message = '请先删除招生中包含此科目信息的记录'
+      }
+
+      if (eMessage.indexOf('xuekao_subject_id_fkey') > -1) {
+        ret.message = '请先删除学考中包含此科目信息的记录'
+      }
+
+      if (eMessage.indexOf('xuankao_subject_id_fkey') > -1) {
+        ret.message = '请先删除选考中包含此科目信息的记录'
+      }
+
+      return ret
+    }
+  }
   public async findAll(queryOption): Promise<Response<Array<SubjectInfo>>> {
     try {
       const data = await this.subjectDao.findAll(queryOption)

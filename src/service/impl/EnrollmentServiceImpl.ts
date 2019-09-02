@@ -23,7 +23,22 @@ export class EnrollmentServiceImpl implements EnrollmentService {
   }
 
   public async delete(id: number) {
-    return await this.enrollmentDao.delete(id)
+    try {
+      const data = await this.enrollmentDao.delete(id)
+      return {
+        code: ResponseCode.OK,
+        message: '删除成功',
+      }
+    } catch (e) {
+      console.log(e)
+      const eMessage = e.toString()
+      const ret = {
+        code: ResponseCode.ERROR,
+        message: '删除失败'
+      }
+
+      return ret
+    }
   }
 
   public async findAll(queryOption: QueryOption): Promise<Array<EnrollmentInfo>> {
