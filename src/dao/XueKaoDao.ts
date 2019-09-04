@@ -5,6 +5,8 @@ import XueKao from '../db/models/xuekao'
 import {XuanKaoInfo} from './XuanKaoDao'
 import {SchoolInfo} from './SchoolDao'
 import {QueryOption} from '../util/help'
+import {SubjectInfo} from './SubjectDao'
+import Subject from '../db/models/subject'
 
 export interface XuekaoDao {
   /**
@@ -38,11 +40,19 @@ export interface XuekaoDao {
 
   update(id: number, entity: XueKaoInfo): Promise<XueKaoInfo>
 
+  findSubjectIdBySubjectName(subjectName: string): Promise<SubjectInfo>
 
 }
 export interface XueKaoInfo {
   id?: string
   idNumber: string
   subjectId: string
+  level: string
+}
+
+export interface XueKaoViewInfo {
+  id?: string
+  idNumber: string
+  subjectName: string
   level: string
 }

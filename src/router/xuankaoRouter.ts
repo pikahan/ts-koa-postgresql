@@ -27,14 +27,14 @@ router.post('/create', async ctx => {
   ctx.body = ret
 })
 
-// router.post('/update/:id', async ctx => {
-//   const entity = ctx.request.body
-//   const {id} = ctx.params
-//   if (entity) {
-//     const ret = await registrationService.update(id, entity)
-//     ctx.body = ret
-//   }
-// })
+router.post('/update/:id', async ctx => {
+  const entity = ctx.request.body
+  const {id} = ctx.params
+  if (entity) {
+    const ret = await xuankaoService.update(id, entity)
+    ctx.body = ret
+  }
+})
 
 router.get('/delete/:id', async ctx => {
   const { id } = ctx.params

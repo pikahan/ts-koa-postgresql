@@ -6,6 +6,8 @@ import {dbContext} from '../../db/db'
 import {LoginStatus, RegisterStatus, UserDao, UserInfo} from '../UserDao'
 import User from '../../db/models/user'
 import School from '../../db/models/school'
+import {StudentInfo} from '../StudentDao'
+import Student from '../../db/models/student'
 
 
 export class UserDaoImpl implements UserDao {
@@ -72,5 +74,14 @@ export class UserDaoImpl implements UserDao {
 
   public async update(id: number , entity: UserInfo) {
     return await User.update( entity, { where: { id } })
+  }
+
+  public async findInfoByStudentId(id: number): Promise<StudentInfo> {
+    return await Student.findOne({
+      raw: true,
+      where: {
+        id
+      }
+    })
   }
 }

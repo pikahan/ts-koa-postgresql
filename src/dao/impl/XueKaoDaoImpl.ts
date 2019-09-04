@@ -16,6 +16,7 @@ import SpecialityView from '../../db/models/speciality_view'
 import {QueryOption, queryOption2SequelizeQueryOption} from '../../util/help'
 import {SpecialityInfo} from '../SpecialityDao'
 import XueKaoView from '../../db/models/xuekao_view'
+import Subject from '../../db/models/subject'
 
 export class XueKaoDaoImpl implements XuekaoDao {
   constructor() {
@@ -54,6 +55,14 @@ export class XueKaoDaoImpl implements XuekaoDao {
       where: {
         id,
       },
+    })
+  }
+  public async findSubjectIdBySubjectName(subjectName: string): Promise<SubjectInfo> {
+    return await Subject.findOne({
+      raw: true,
+      where: {
+        subjectName
+      }
     })
   }
 

@@ -4,9 +4,10 @@
  */
 
 
-import {RegistrationInfo} from '../dao/RegistrationDao'
+import {RegistrationInfo, RegistrationViewInfo} from '../dao/RegistrationDao'
 import {QueryOption} from '../util/help'
 import {Response} from '../util/type'
+import {MajorTypeInfo} from '../dao/MajorTypeDao'
 
 export interface RegistrationService {
   /**
@@ -24,11 +25,14 @@ export interface RegistrationService {
    *
    * @param {RegistrationInfo} registrationInfo
    */
-  create(registrationInfo: RegistrationInfo)
+  create(entity: RegistrationViewInfo)
 
   /**
    *
    * @param {number} id
    */
   delete(id: number)
+
+  update(id, entity: RegistrationViewInfo)
+
 }

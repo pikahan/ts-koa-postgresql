@@ -20,6 +20,7 @@ export class SubjectDaoImpl implements SubjectDao {
   }
 
   public async create(entity: SubjectInfo): Promise<SubjectInfo> {
+    console.log(entity)
     return await Subject.create(entity)
   }
 

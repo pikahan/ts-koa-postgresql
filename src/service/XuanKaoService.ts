@@ -2,7 +2,7 @@
  * @Description: 数据库表操作基础接口 UserDao.ts
  */
 import XuanKao from '../db/models/xuankao'
-import {XuanKaoInfo} from '../dao/XuanKaoDao'
+import {XuanKaoInfo, XuanKaoViewInfo} from '../dao/XuanKaoDao'
 import {Response} from '../util/type'
 import {QueryOption} from '../util/help'
 import {MajorInfo} from '../dao/MajorDao'
@@ -24,11 +24,13 @@ export interface XuankaoService {
    * 创建
    * @param {XuanKaoInfo} entity
    */
-  create(entity: XuanKaoInfo)
+  create(entity: XuanKaoViewInfo)
 
   /**
    * @name 查询
    * @param {number} id
    */
   delete(id: number)
+
+  update(id: number, entity: XuanKaoInfo)
 }

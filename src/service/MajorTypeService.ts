@@ -6,30 +6,23 @@
 import Major from '../db/models/major'
 import Promise from 'sequelize/types/lib/promise'
 import {MajorInfo, MajorViewInfo} from '../dao/MajorDao'
-import {EnrollmentInfo, EnrollmentViewInfo} from '../dao/EnrollmentDao'
 import {QueryOption} from '../util/help'
 import {Response} from '../util/type'
+import {MajorTypeInfo} from '../dao/MajorTypeDao'
 
-export interface EnrollmentService {
+export interface MajorTypeService {
   /**
    *
    * @returns {Major}
    */
-  findAll(queryOption: QueryOption): Promise<Array<EnrollmentInfo>>
-
-  /**
-   *
-   * @param {string} majorId
-   */
-  findByMajorId(majorId: string): Promise<EnrollmentInfo>
-
+  findAll(queryOption: QueryOption): Promise<Response<Array<MajorTypeInfo>>>
 
 
   /**
    * 创建
    * @param {MajorInfo} entity
    */
-  create(entity: EnrollmentViewInfo): Promise<EnrollmentInfo>
+  create(entity: MajorTypeInfo): Promise<Response<MajorTypeInfo>>
 
   /**
    * @name 查询
@@ -37,6 +30,6 @@ export interface EnrollmentService {
    */
   delete(id: number)
 
-  update(id: number, entity: EnrollmentViewInfo): Promise<Response<EnrollmentInfo>>
 
+  update(id, entity: MajorTypeInfo)
 }

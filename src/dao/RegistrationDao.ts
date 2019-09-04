@@ -2,11 +2,9 @@
  * @Description: 数据库表操作基础接口 SchoolDao.ts
  */
 
-
-import Registration from '../db/models/registration'
-import {MajorInfo} from './MajorDao'
-import {SchoolInfo} from './SchoolDao'
 import {QueryOption} from '../util/help'
+import Promise from 'sequelize/types/lib/promise'
+import {SchoolInfo} from './SchoolDao'
 
 export interface RegistrationDao {
   /**
@@ -44,10 +42,22 @@ export interface RegistrationDao {
 
   update(id: number, entity: RegistrationInfo): Promise<RegistrationInfo>
 
+  findSchoolIdBySchoolName(schoolName: string): Promise<SchoolInfo>
+
 }
 export interface RegistrationInfo {
   id?: string
   schoolId: string
+  year: string
+  conditions: string
+  startTime: Date
+  endTime: Date
+  registration_way: string
+}
+
+export interface RegistrationViewInfo {
+  id?: string
+  schoolName: string
   year: string
   conditions: string
   startTime: Date

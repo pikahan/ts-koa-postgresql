@@ -3,16 +3,50 @@
  */
 
 import {XuankaoService} from '../XuanKaoService'
-import {XuankaoDao, XuanKaoInfo} from '../../dao/XuanKaoDao'
+import {XuankaoDao, XuanKaoInfo, XuanKaoViewInfo} from '../../dao/XuanKaoDao'
 import {XuanKaoDaoImpl} from '../../dao/impl/XuanKaoDaoImpl'
 import XuanKao from '../../db/models/xuankao'
 import {Response, ResponseCode} from '../../util/type'
 import {QueryOption} from '../../util/help'
+import {SubjectInfo} from '../../dao/SubjectDao'
 
 export class XuanKaoServiceImpl implements XuankaoService {
-  create(entity: XuanKaoInfo) {
+  public async create(entity: XuanKaoViewInfo): Promise<Response<XuanKaoInfo>> {
+    const subjectName = entity.subjectName
+    const subject = await this.xuanKaoDao.findSubjectIdBySubjectName(subjectName)
+    if (!subject) {
+      return {
+        code: ResponseCode.ERROR,
+        message: '没有此学科'
+      }
+    }
+    const res = await this.xuanKaoDao.create({
+      subjectId: subject.id,
+      grade: entity.grade,
+      idNumber: entity.idNumber
+    })
+
+    return {
+      code: ResponseCode.OK,
+      message: 'ok',
+      response: res
+    }
   }
 
+  public async update(id: number, entity: XuanKaoInfo): Promise<Response<XuanKaoInfo>> {
+    try {
+      const data = await this.xuanKaoDao.update(id, entity)
+      return {
+        code: ResponseCode.OK,
+        message: '修改成功'
+      }
+    } catch (e) {
+      return {
+        code: ResponseCode.ERROR,
+        message: '修改失败: 名称重复'
+      }
+    }
+  }
   public async delete(id: number) {
     try {
       const data = await this.xuanKaoDao.delete(id)
@@ -28,14 +62,6 @@ export class XuanKaoServiceImpl implements XuankaoService {
         message: '删除失败'
       }
 
-      if (eMessage.indexOf('major_school_id_fkey') > -1) {
-        ret.message = '请先删除专业中包含此学校信息的记录'
-      }
-
-
-      if (eMessage.indexOf('enrollment_major_id_fkey') > -1) {
-        ret.message = '请先删除招生中包含此专业信息的记录'
-      }
       return ret
     }
   }

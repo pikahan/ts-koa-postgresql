@@ -6,6 +6,7 @@ import {SpecialityService} from './SpecialityService'
 import {SubjectInfo} from '../dao/SubjectDao'
 import {QueryOption} from '../util/help'
 import {Response} from '../util/type'
+import {SchoolInfo} from '../dao/SchoolDao'
 
 export interface SubjectService {
   /**
@@ -29,6 +30,10 @@ export interface SubjectService {
    * @param {SubjectInfo} entity
    */
   create(entity: SubjectInfo)
+
+
+  update(id: number, entity: SubjectInfo): Promise<Response<SubjectInfo>>
+
 
   /**
    * @name 查询

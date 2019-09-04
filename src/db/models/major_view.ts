@@ -3,7 +3,7 @@ import { Table, Column, Model } from 'sequelize-typescript'
 @Table({
   tableName: 'major_view'
 })
-export default class Major_view extends Model<Major_view> {
+export default class MajorView extends Model<MajorView> {
   @Column({
     comment: '自增ID',
     primaryKey: true,

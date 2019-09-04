@@ -20,8 +20,8 @@ const studentService: StudentService = new StudentServiceImpl()
 
 // findAll ?currPage=1&limit=10
 router.get('/', async ctx => {
-  const {currPage, limit, idNumber, sex, phoneNumber, name, highSchoolName, province} = ctx.query
-  const exactQueryAttr = toPureObj({province, phoneNumber, sex, idNumber})
+  const {currPage, limit, idNumber, sex, phoneNumber, name, highSchoolName, province, id} = ctx.query
+  const exactQueryAttr = toPureObj({province, phoneNumber, sex, idNumber, id})
   const fuzzyQueryAttr = toPureObj({name, highSchoolName})
   const limitOption = toPureObj({limit: limit, offset: currPage})
   const queryOption = toPureObj({exactQueryAttr, fuzzyQueryAttr, limitOption})

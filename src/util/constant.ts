@@ -1,7 +1,8 @@
 export enum STATUS {
   OK,
   NOT_FOUND,
-  ERROR
+  ERROR,
+  NOT_LOGIN
 }
 
 export enum LoginStatusCode {

@@ -17,8 +17,38 @@ export class SubjectServiceImpl implements SubjectService {
     this.subjectDao = new SubjectDaoImpl()
   }
 
-  create(entity: SubjectInfo) {
+  public async create(entity: SubjectInfo) {
+    try {
+      console.log(entity)
+      const data = await this.subjectDao.create(entity)
+      return {
+        code: ResponseCode.OK,
+        message: '创建成功',
+        response: data
+      }
+    } catch (e) {
+      console.log(e)
+      return {
+        code: ResponseCode.ERROR,
+        message: "创建失败: 名称重复"
+      }
+    }
   }
+
+  public async update(id: number, entity: SubjectInfo): Promise<Response<SubjectInfo>> {
+    try {
+      const data = await this.subjectDao.update(id, entity)
+      return {
+        code: ResponseCode.OK,
+        message: '修改成功'
+      }    } catch (e) {
+      return {
+        code: ResponseCode.ERROR,
+        message: '修改失败: 名称重复'
+      }
+    }
+  }
+
 
   public async delete(id: number) {
     try {

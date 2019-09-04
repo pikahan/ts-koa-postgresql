@@ -18,11 +18,19 @@
     "tsc": "tsc -w"
   },
   "dependencies": {
+    "co-redis": "^2.1.1",
+    "ioredis": "^4.14.0",
     "koa": "^2.8.1",
     "koa-body": "^4.1.1",
+    "koa-bodyparser": "^4.2.1",
+    "koa-bodyparser-ts": "^0.3.1",
+    "koa-redis": "^4.0.0",
     "koa-router": "^7.4.0",
+    "koa-session": "^5.12.3",
+    "koa-session2": "^2.2.10",
     "koa2-cors": "^2.0.6",
     "pg": "^7.12.1",
+    "redis": "^2.8.0",
     "reflect-metadata": "^0.1.13",
     "sequelize": "^5.16.0",
     "sequelize-typescript": "^1.0.0"

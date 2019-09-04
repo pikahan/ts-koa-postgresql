@@ -2,9 +2,10 @@
  * @Description: 数据库表操作基础接口 UserDao.ts
  */
 import XueKao from '../db/models/xuekao'
-import {XueKaoInfo} from '../dao/XueKaoDao'
+import {XueKaoInfo, XueKaoViewInfo} from '../dao/XueKaoDao'
 import {Response} from '../util/type'
 import {QueryOption} from '../util/help'
+import {XuanKaoInfo} from '../dao/XuanKaoDao'
 
 export interface XuekaoService {
   /**
@@ -23,11 +24,14 @@ export interface XuekaoService {
    * 创建
    * @param {UserInfo} entity
    */
-  create(entity: XueKaoInfo)
+  create(entity: XueKaoViewInfo)
 
   /**
    * @name 查询
    * @param {number} id
    */
   delete(id: number)
+
+  update(id: number, entity: XueKaoInfo)
+
 }

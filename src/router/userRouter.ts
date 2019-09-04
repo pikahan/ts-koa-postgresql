@@ -3,24 +3,76 @@
  * @version: 0.1.0
  */
 import * as Router from 'koa-router'
-import {STATUS} from '../util/constant'
+import {LoginStatusCode, RegisterStatusCode, STATUS} from '../util/constant'
 import {UserService} from '../service/UserService'
 import {UserServiceImpl} from '../service/impl/UserServiceImpl'
 import {toMd5} from '../util/help'
+const Store = require("../config/Store")
+
+const redis = new Store()
 
 const router = new Router()
 const userService: UserService = new UserServiceImpl()
 
 // login
 router.get('/login', async ctx => {
-  const { username, pwd } = ctx.query
-  ctx.body = await userService.login(username, pwd)
+  const data = await redis.get('username')
+  console.log(data, 'redis')
+  if (data) {
+    return (ctx.body = {
+      code: 0,
+      response: ctx.session.user
+    })
+  }
+  const query = ctx.query
+  // 正常登录
+  if (typeof query.username !== 'undefined') {
+    const {username, pwd} = ctx.query
+    const res = await userService.login(username, pwd)
+    if (res.code === LoginStatusCode.OK) {
+      ctx.session.user = {
+        id: res.response.id,
+        username: res.response.username
+      }
+    }
+    ctx.body = res
+
+  } else {
+    return (ctx.body = {
+      code: STATUS.NOT_LOGIN,
+      message: '未登录, 请进入登录界面进行登录'
+    })
+  }
+})
+
+router.get('/logout', async ctx => {
+  ctx.session = null
+  // ctx.response.redirect('/login');
 })
 
 // register
 router.get('/register', async ctx => {
   const { username, pwd } = ctx.query
-  ctx.body = await userService.register(username, pwd)
+  const res = await userService.register(username, toMd5(pwd))
+  if (res.code === RegisterStatusCode.OK) {
+    ctx.session.user = {
+      id: res.response.id,
+      username: res.response.username
+    }
+  }
+  ctx.body = res
+})
+
+router.get('/info/:username', async ctx => {
+  const { username } = ctx.params
+  const res = await userService.findInfoByUsername(username)
+  // if (res.code === RegisterStatusCode.OK) {
+  //   ctx.session.user = {
+  //     id: res.response.id,
+      // username: res.response.username
+  //   }
+  // }
+  ctx.body = res
 })
 
 // update

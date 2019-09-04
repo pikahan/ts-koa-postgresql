@@ -20,26 +20,26 @@ export class MajorServiceImpl implements MajorService {
 
   public async create(entity: MajorViewInfo): Promise<Response<MajorInfo>> {
     try {
-      const { id: majorTypeId } = await this.majorDao.findByMajorName(entity.majorName)
-      const { id: schoolId } = await this.majorDao.findBySchoolName(entity.schoolName)
+      const majorType = await this.majorDao.findByMajorName(entity.majorName)
+      const school = await this.majorDao.findBySchoolName(entity.schoolName)
 
-      if (!majorTypeId) {
+      if (!majorType) {
         return {
           code: ResponseCode.ERROR,
-          message: '创建失败: 没有此专业名称'
+          message: '修改失败: 没有此专业名称'
         }
       }
 
-      if (!schoolId) {
+      if (!school) {
         return {
           code: ResponseCode.ERROR,
-          message: '创建失败: 没有此学校名称'
+          message: '修改失败: 没有此学校名称'
         }
       }
 
       await this.majorDao.create({
-        majorTypeId,
-        schoolId
+        majorTypeId: majorType.id,
+        schoolId: school.id
       })
 
       return {
@@ -57,17 +57,18 @@ export class MajorServiceImpl implements MajorService {
 
   public async update(id: number, entity: MajorViewInfo): Promise<Response<MajorInfo>> {
     try {
-      const { id: majorTypeId } = await this.majorDao.findByMajorName(entity.majorName)
-      const { id: schoolId } = await this.majorDao.findBySchoolName(entity.schoolName)
+      const majorType = await this.majorDao.findByMajorName(entity.majorName)
+      const school = await this.majorDao.findBySchoolName(entity.schoolName)
 
-      if (!majorTypeId) {
+      if (!majorType) {
         return {
           code: ResponseCode.ERROR,
           message: '修改失败: 没有此专业名称'
         }
       }
 
-      if (!schoolId) {
+      console.log('get id ', id)
+      if (!school) {
         return {
           code: ResponseCode.ERROR,
           message: '修改失败: 没有此学校名称'
@@ -75,8 +76,8 @@ export class MajorServiceImpl implements MajorService {
       }
 
       await this.majorDao.update(id, {
-        majorTypeId,
-        schoolId
+        majorTypeId: majorType.id,
+        schoolId: school.id
       })
 
       return {
@@ -108,7 +109,7 @@ export class MajorServiceImpl implements MajorService {
       }
 
       if (eMessage.indexOf('major_school_id_fkey') > -1) {
-        ret.message = '请先删除专业中包含此学校信息的记录'
+        ret.message = '请先删除专业中包含此专业信息的记录'
       }
 
 

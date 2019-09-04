@@ -34,6 +34,18 @@ export class StudentServiceImpl implements StudentService {
         message: '删除失败'
       }
 
+      if (eMessage.indexOf('xuankao_id_number_fkey') > -1) {
+        ret.message = '请先删除选考中包含此学生的记录'
+      }
+
+      if (eMessage.indexOf('xuekao_id_number_fkey') > -1) {
+        ret.message = '请先删除学考中包含此学生的记录'
+      }
+
+      if (eMessage.indexOf('speciality_id_number_fkey') > -1) {
+        ret.message = '请先删除特长中包含此学生的记录'
+      }
+
       return ret
     }
   }

@@ -5,8 +5,9 @@
 import {dbContext} from '../../db/db'
 import {RegistrationDao, RegistrationInfo} from '../RegistrationDao'
 import Registration from '../../db/models/registration'
-import {queryOption2SequelizeQueryOption} from '../../util/help'
+import {formatDate, queryOption2SequelizeQueryOption} from '../../util/help'
 import RegistrationView from '../../db/models/registration_view'
+import School from '../../db/models/school'
 
 export class RegistrationDaoImpl implements RegistrationDao {
   constructor() {
@@ -17,8 +18,28 @@ export class RegistrationDaoImpl implements RegistrationDao {
    * @name 查询
    * @returns {Promise<Model[]>}
    */
-  public async findAll(queryOption) {
-    return await RegistrationView.findAll(queryOption2SequelizeQueryOption(queryOption));
+
+
+// { id: '0',
+//     schoolName: '浙江大学城市学院',
+//     conditions: '无',
+//     startTime: 2019-08-26T02:10:41.000Z,
+//     endTime: 2019-08-26T02:10:45.000Z } ] 'test'
+// { raw: true, where: {} }
+
+
+public async findAll(queryOption) {
+    const option = queryOption2SequelizeQueryOption(queryOption)
+    return await RegistrationView.findAll(option).then(res => {
+      res.forEach(obj => {
+        const dateKeys = Object.keys(obj).filter(key => key.indexOf('Time') > -1)
+        dateKeys.forEach(dateKey => {
+          console.log(formatDate(obj[dateKey]))
+          obj[dateKey] = formatDate(obj[dateKey])
+        })
+      })
+      return res
+    })
   }
 
   public async findAllWithLimitation(currPage: number, limit: number) {
@@ -76,5 +97,14 @@ export class RegistrationDaoImpl implements RegistrationDao {
 
   public async update(id: number , entity: RegistrationInfo) {
     return await Registration.update( entity, { where: { id } })
+  }
+
+  public async findSchoolIdBySchoolName(schoolName: string) {
+    return await School.findOne({
+      raw: true,
+      where: {
+        schoolName
+      }
+    })
   }
 }

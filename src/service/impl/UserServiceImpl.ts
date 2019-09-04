@@ -1,9 +1,10 @@
 import {UserService} from '../UserService'
 import {LoginStatus, RegisterStatus, UserDao} from '../../dao/UserDao'
 import {UserDaoImpl} from '../../dao/impl/UserDaoImpl'
-import {LoginStatusCode, RegisterStatusCode} from '../../util/constant'
+import {LoginStatusCode, RegisterStatusCode, STATUS} from '../../util/constant'
 import {toMd5} from '../../util/help'
-import {ResponseCode} from '../../util/type'
+import {Response, ResponseCode} from '../../util/type'
+import {StudentInfo} from '../../dao/StudentDao'
 
 /*
  * @Description: service实现类 UserServiceImpl.ts
@@ -63,14 +64,6 @@ export class UserServiceImpl implements UserService {
         message: '删除失败'
       }
 
-      if (eMessage.indexOf('major_school_id_fkey') > -1) {
-        ret.message = '请先删除专业中包含此学校信息的记录'
-      }
-
-
-      if (eMessage.indexOf('enrollment_major_id_fkey') > -1) {
-        ret.message = '请先删除招生中包含此专业信息的记录'
-      }
       return ret
     }
   }
@@ -123,5 +116,39 @@ export class UserServiceImpl implements UserService {
       pwd: toMd5(pwd),
       level
     })
+  }
+
+  public async findInfoByUsername(username: string): Promise<Response<StudentInfo>> {
+    const user = await this.userDao.findByUsername(username)
+    console.log(user.studentId)
+    if (!user) {
+      return {
+        code: STATUS.ERROR,
+        message: 'not found'
+      }
+    }
+
+    if (typeof user.studentId !== 'number') {
+      // await this.userDao.create(entity)
+      return {
+        code: STATUS.ERROR,
+        message: 'do not have student id'
+      }
+    }
+
+    const info = await this.userDao.findInfoByStudentId(user.studentId)
+
+    if (!info) {
+      return {
+        code: STATUS.ERROR,
+        message: 'do not have info'
+      }
+    }
+
+    return {
+      code: STATUS.OK,
+      message: 'ok',
+      response: info
+    }
   }
 }

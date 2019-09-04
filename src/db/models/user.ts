@@ -9,7 +9,7 @@ export default class User extends Model<User> {
     primaryKey: true,
     autoIncrement: true,
   })
-  id: number
+  uuid: number
 
   @Column
   username: string
@@ -19,4 +19,7 @@ export default class User extends Model<User> {
 
   @Column
   level: string
+
+  @Column
+  studentId: number
 }

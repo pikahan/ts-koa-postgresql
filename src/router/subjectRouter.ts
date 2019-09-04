@@ -20,6 +20,7 @@ const subjectService: SubjectService = new SubjectServiceImpl()
 
 // findAll ?currPage=1&limit=10
 router.get('/', async ctx => {
+  console.log(123)
   const {currPage, limit, subjectName} = ctx.query
   const exactQueryAttr = toPureObj({})
   const fuzzyQueryAttr = toPureObj({subjectName})
@@ -36,13 +37,13 @@ router.post('/create', async ctx => {
   ctx.body = ret
 })
 
-// router.post('/update/:id', async ctx => {
-//   const entity = ctx.request.body
-//   const {id} = ctx.params
-//   // console.log(entity)
-//   const ret = await subjectService.update(id, entity)
-//   ctx.body = ret
-// })
+router.post('/update/:id', async ctx => {
+  const entity = ctx.request.body
+  const {id} = ctx.params
+  // console.log(entity)
+  const ret = await subjectService.update(id, entity)
+  ctx.body = ret
+})
 
 router.get('/delete/:id', async ctx => {
   const {id} = ctx.params

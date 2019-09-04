@@ -7,21 +7,84 @@ import userRouter from './userRouter'
 import registrationRouter from './registrationRouter'
 import schoolRouter from './schoolRouter'
 import majorRouter from './majorRouter'
+import majorTypeRouter from './majorTypeRouter'
 import enrollmentRouter from './enrollmentRouter'
 import subjectRouter from './subjectRouter'
 import studentRouter from './studentRouter'
 import specialityRouter from './specialityRouter'
 import xuekaoRouter from './xuekaoRouter'
 import xuankaoRouter from './xuankaoRouter'
+import {LoginStatusCode, STATUS} from '../util/constant'
+import {UserService} from '../service/UserService'
+import {UserServiceImpl} from '../service/impl/UserServiceImpl'
+const userService: UserService = new UserServiceImpl()
 
 const router = new Router({
   prefix: '/api',
 })
+// let sum = 0
+// router.get('/auth', async (ctx, next) => {
+//   if (ctx.session.user) {
+//     ctx.body =  JSON.stringify({
+//       status: STATUS.OK
+//     })
+//   }
+//   else {
+//     ctx.body = JSON.stringify({
+//       status: STATUS.NOT_LOGIN
+//     })
+//   }
+//   await next()
+// })
+// router.get('/user/login', async ctx => {
+//   const query = ctx.query
+//   if (typeof query.username === 'undefined') {
+//     ctx.body = JSON.stringify({
+//       code: STATUS.ERROR
+//     })
+//   } else {
+//     const {username, pwd} = query
+//       const res = await userService.login(username, pwd)
+//       ctx.session.user = res.response
+//       ctx.body = JSON.stringify(res)
+//   }
+// })
 
-router.get('/login', async ctx => {
-  const { username, pwd } = ctx.query
-  ctx.body = ctx.query
-})
+// router.get('/login', async ctx => {
+//   console.log(ctx.session.user)
+  // const data = await redis.get('username')
+  // console.log(data, 'redis')
+  // if (data) {
+  //   return (ctx.body = {
+  //     code: 0,
+  //     response: ctx.session.user
+  //   })
+  // }
+  // const query = ctx.query
+  // 正常登录
+  // if (typeof query.username !== 'undefined') {
+  //   const {username, pwd} = ctx.query
+  //   const res = await userService.login(username, pwd)
+  //   if (res.code === LoginStatusCode.OK) {
+  //     ctx.session.user = {
+  //       id: res.response.id,
+  //       username: res.response.username
+  //     }
+  //     return ctx.body = res
+  //   }
+    // console.log(ctx.session.user)
+  // }
+    // ctx.body = 123
+  // } else {
+  //   ctx.body = 123
+  // }
+  // else {
+  //   return (ctx.body = {
+  //     code: STATUS.NOT_LOGIN,
+  //     message: '未登录, 请进入登录界面进行登录'
+  //   })
+  // }
+// })
 
 router.use('/school', schoolRouter.routes(), schoolRouter.allowedMethods())
 
@@ -30,6 +93,8 @@ router.use('/user', userRouter.routes(), userRouter.allowedMethods())
 router.use('/registration', registrationRouter.routes(), registrationRouter.allowedMethods())
 
 router.use('/major', majorRouter.routes(), majorRouter.allowedMethods())
+
+router.use('/majorType', majorTypeRouter.routes(), majorTypeRouter.allowedMethods())
 
 router.use('/enrollment', enrollmentRouter.routes(), enrollmentRouter.allowedMethods())
 

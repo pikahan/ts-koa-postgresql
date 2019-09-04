@@ -4,6 +4,8 @@
  */
 
 import {LoginStatus, RegisterStatus, UserInfo} from '../dao/UserDao'
+import {StudentInfo} from '../dao/StudentDao'
+import {Response} from '../util/type'
 
 export interface UserService {
   /**
@@ -36,4 +38,6 @@ export interface UserService {
   register(username: string, pwd: string): Promise<RegisterStatus>
 
   login(username: string, pwd: string): Promise<LoginStatus>
+
+  findInfoByUsername(username: string): Promise<Response<StudentInfo>>
 }

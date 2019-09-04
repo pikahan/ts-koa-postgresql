@@ -1,11 +1,12 @@
 
 import {RegistrationService} from '../RegistrationService'
 import Registration from '../../db/models/registration'
-import {RegistrationDao, RegistrationInfo} from '../../dao/RegistrationDao'
+import {RegistrationDao, RegistrationInfo, RegistrationViewInfo} from '../../dao/RegistrationDao'
 import {RegistrationDaoImpl} from '../../dao/impl/RegistrationDaoImpl'
 import {QueryOption} from '../../util/help'
 import {Response, ResponseCode} from '../../util/type'
 import {EnrollmentInfo} from '../../dao/EnrollmentDao'
+import {MajorInfo, MajorViewInfo} from '../../dao/MajorDao'
 
 /*
  * @Description: service实现类 UserServiceImpl.ts
@@ -53,9 +54,34 @@ export class RegistrationServiceImpl implements RegistrationService {
    *
    * @param {RegistrationInfo} registrationInfo
    */
-  create(registrationInfo: RegistrationInfo) {
-    return this.registrationDao.create(registrationInfo)
-  }
+  public async create(entity: RegistrationViewInfo) {
+    try {
+      const { schoolName, ...rest } = entity
+      const school = await this.registrationDao.findSchoolIdBySchoolName(schoolName)
+
+      if (!school) {
+        return {
+          code: ResponseCode.ERROR,
+          message: '修改失败: 没有此学校名称'
+        }
+      }
+
+      await this.registrationDao.create({
+        schoolId: school.id,
+        ...rest
+      })
+
+      return {
+        code: ResponseCode.OK,
+        message: '修改成功'
+      }
+    } catch (e) {
+      console.log(e)
+      return {
+        code: ResponseCode.ERROR,
+        message: '修改失败: 编号重复',
+      }
+    }  }
 
   /**
    *
@@ -77,6 +103,37 @@ export class RegistrationServiceImpl implements RegistrationService {
       }
 
       return ret
+    }
+  }
+
+  public async update(id: number, entity: RegistrationViewInfo) {
+    try {
+      const { schoolName, ...rest } = entity
+      const school = await this.registrationDao.findSchoolIdBySchoolName(schoolName)
+
+      console.log('get id ', id)
+      if (!school) {
+        return {
+          code: ResponseCode.ERROR,
+          message: '修改失败: 没有此学校名称'
+        }
+      }
+
+      await this.registrationDao.update(id, {
+        schoolId: school.id,
+        ...rest
+      })
+
+      return {
+        code: ResponseCode.OK,
+        message: '修改成功'
+      }
+    } catch (e) {
+      console.log(e)
+      return {
+        code: ResponseCode.ERROR,
+        message: '修改失败: 编号重复',
+      }
     }
   }
 }

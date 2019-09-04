@@ -8,6 +8,8 @@ import Promise from 'sequelize/types/lib/promise'
 import {UserInfo} from './UserDao'
 import {SchoolInfo} from './SchoolDao'
 import {QueryOption} from '../util/help'
+import {MajorInfo} from './MajorDao'
+import {SubjectInfo} from './SubjectDao'
 
 export interface EnrollmentDao {
   /**
@@ -19,12 +21,10 @@ export interface EnrollmentDao {
 
   findAllWithLimitation(currPage: number, limit: number): Promise<Array<EnrollmentInfo>>
 
-  /**
-   *
-   * @param {string} majorId
-   */
-  findByMajorId(majorId: string): Promise<Array<EnrollmentInfo>>
 
+  findBySubjectName(subjectName: string): Promise<Array<SubjectInfo>>
+
+  findByMajorNameAndSchoolName(majorName: string, schoolName: string): Promise<Array<MajorInfo>>
 
   /**
    * 创建
@@ -45,6 +45,16 @@ export interface EnrollmentInfo {
   id?: number
   majorId: string
   subjectId: string
+  year: string
+  tuition: string
+  otherRequirement: string
+}
+
+export interface EnrollmentViewInfo {
+  id?: number
+  majorName: string
+  subjectName: string
+  schoolName: string
   year: string
   tuition: string
   otherRequirement: string

@@ -6,6 +6,7 @@ import {UserInfo} from './UserDao'
 import {SchoolInfo} from './SchoolDao'
 import {QueryOption} from '../util/help'
 import {SubjectInfo} from './SubjectDao'
+import Promise from 'sequelize'
 
 export interface XuankaoDao {
   /**
@@ -40,10 +41,19 @@ export interface XuankaoDao {
 
   update(id: number, entity: XuanKaoInfo): Promise<XuanKaoInfo>
 
+  findSubjectIdBySubjectName(subjectName: string): Promise<SubjectInfo>
+
 }
 export interface XuanKaoInfo {
   id?: string
   idNumber: string
   subjectId: string
+  grade: string
+}
+
+export interface XuanKaoViewInfo {
+  id?: string
+  idNumber: string
+  subjectName: string
   grade: string
 }

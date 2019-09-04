@@ -7,7 +7,7 @@ import {MajorDao, MajorInfo} from '../MajorDao'
 import Major from '../../db/models/major'
 import {Op} from 'sequelize'
 import {queryOption2SequelizeQueryOption} from '../../util/help'
-import Major_view from '../../db/models/major_view'
+import MajorView from '../../db/models/major_view'
 import Major_type from '../../db/models/major_type'
 import {SchoolInfo} from '../SchoolDao'
 import School from '../../db/models/school'
@@ -30,7 +30,7 @@ export class MajorDaoImpl implements MajorDao {
   }
 
   public async findAll(queryOption): Promise<Array<MajorInfo>> {
-    return await Major_view.findAll(queryOption2SequelizeQueryOption(queryOption));
+    return await MajorView.findAll(queryOption2SequelizeQueryOption(queryOption));
   }
 
   public async findAllWithLimitation(currPage: number, limit: number) {

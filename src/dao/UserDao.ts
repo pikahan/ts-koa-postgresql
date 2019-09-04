@@ -4,6 +4,7 @@
 import User from '../db/models/user'
 import {LoginStatusCode, RegisterStatusCode} from '../util/constant'
 import {SchoolInfo} from './SchoolDao'
+import {StudentInfo} from './StudentDao'
 
 export interface UserDao {
   /**
@@ -35,12 +36,15 @@ export interface UserDao {
 
   update(id: number, entity: UserInfo): Promise<UserInfo>
 
+
+  findInfoByStudentId(id: number): Promise<StudentInfo>
 }
 export interface UserInfo {
   id?: string
   level?: string
   username: string
   pwd: string
+  studentId?: number
 }
 
 

@@ -57,4 +57,14 @@ export class XuanKaoDaoImpl implements XuankaoDao {
     })
   }
 
+  public async findSubjectIdBySubjectName(subjectName: string): Promise<SubjectInfo> {
+    return await Subject.findOne({
+      raw: true,
+      where: {
+        subjectName
+      }
+    })
+  }
+
+
 }
