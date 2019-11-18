@@ -12,24 +12,32 @@ import {SubjectInfo} from '../../dao/SubjectDao'
 
 export class XuanKaoServiceImpl implements XuankaoService {
   public async create(entity: XuanKaoViewInfo): Promise<Response<XuanKaoInfo>> {
-    const subjectName = entity.subjectName
-    const subject = await this.xuanKaoDao.findSubjectIdBySubjectName(subjectName)
-    if (!subject) {
+    try {
+
+      const subjectName = entity.subjectName
+      const subject = await this.xuanKaoDao.findSubjectIdBySubjectName(subjectName)
+      if (!subject) {
+        return {
+          code: ResponseCode.ERROR,
+          message: '没有此学科'
+        }
+      }
+      const res = await this.xuanKaoDao.create({
+        subjectId: subject.id,
+        grade: entity.grade,
+        idNumber: entity.idNumber
+      })
+
+      return {
+        code: ResponseCode.OK,
+        message: 'ok',
+        response: res
+      }
+    } catch (e) {
       return {
         code: ResponseCode.ERROR,
-        message: '没有此学科'
+        message: '科目不能重复'
       }
-    }
-    const res = await this.xuanKaoDao.create({
-      subjectId: subject.id,
-      grade: entity.grade,
-      idNumber: entity.idNumber
-    })
-
-    return {
-      code: ResponseCode.OK,
-      message: 'ok',
-      response: res
     }
   }
 

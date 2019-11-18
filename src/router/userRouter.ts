@@ -16,24 +16,17 @@ const userService: UserService = new UserServiceImpl()
 
 // login
 router.get('/login', async ctx => {
-  const data = await redis.get('username')
-  console.log(data, 'redis')
-  if (data) {
-    return (ctx.body = {
-      code: 0,
-      response: ctx.session.user
-    })
-  }
   const query = ctx.query
   // 正常登录
   if (typeof query.username !== 'undefined') {
     const {username, pwd} = ctx.query
     const res = await userService.login(username, pwd)
     if (res.code === LoginStatusCode.OK) {
-      ctx.session.user = {
+
+      redis.set({
         id: res.response.id,
         username: res.response.username
-      }
+      })
     }
     ctx.body = res
 

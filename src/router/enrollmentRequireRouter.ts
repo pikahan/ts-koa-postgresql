@@ -4,26 +4,15 @@
  */
 import * as Router from 'koa-router'
 import {toMd5, toPureObj} from '../util/help'
-import {MajorService} from '../service/MajorService'
-import {MajorServiceImpl} from '../service/impl/MajorServiceImpl'
-import {EnrollmentService} from '../service/EnrollmentService'
-import {EnrollmentServiceImpl} from '../service/impl/EnrollmentServiceImpl'
+import {EnrollmentRequireService} from '../service/EnrollmentRequireService'
+import {EnrollmentServiceRequireImpl} from '../service/impl/EnrollmentRequireServiceImpl'
 
 const router = new Router()
-const enrollmentService: EnrollmentService = new EnrollmentServiceImpl()
+const enrollmentService: EnrollmentRequireService = new EnrollmentServiceRequireImpl()
 
-// findBySchoolName
-// router.post('/name', async ctx => {
-//   const { schoolName } = ctx.request.body
-//   if (schoolName) {
-//     ctx.body = await majorService.findBySchoolName(schoolName)
-//   }
-// })
-
-// findAll ?currPage=1&limit=10
 router.get('/', async ctx => {
-  const {currPage, limit, schoolName, majorName, year} = ctx.query
-  const exactQueryAttr = toPureObj({year})
+  const {currPage, limit, schoolName, majorName, year, subjectName} = ctx.query
+  const exactQueryAttr = toPureObj({year, subjectName})
   const fuzzyQueryAttr = toPureObj({majorName, schoolName})
   const limitOption = toPureObj({limit: limit, offset: currPage})
   const queryOption = toPureObj({exactQueryAttr, fuzzyQueryAttr, limitOption})
@@ -41,7 +30,7 @@ router.post('/create', async ctx => {
 router.post('/update/:id', async ctx => {
   const entity = ctx.request.body
   const {id} = ctx.params
-  console.log(entity)
+  // console.log(entity)
 
   if (entity) {
     const ret = await enrollmentService.update(id, entity)

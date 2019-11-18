@@ -4,10 +4,8 @@
 import {XuekaoService} from '../XueKaoService'
 import {XuekaoDao, XueKaoInfo, XueKaoViewInfo} from '../../dao/XueKaoDao'
 import {XueKaoDaoImpl} from '../../dao/impl/XueKaoDaoImpl'
-import XueKao from '../../db/models/xuekao'
 import {Response, ResponseCode} from '../../util/type'
 import {QueryOption} from '../../util/help'
-import {XuanKaoInfo} from '../../dao/XuanKaoDao'
 
 export class XueKaoServiceImpl implements XuekaoService {
   private xueKaoDao: XuekaoDao
@@ -17,24 +15,32 @@ export class XueKaoServiceImpl implements XuekaoService {
   }
 
   public async create(entity: XueKaoViewInfo) {
-    const subjectName = entity.subjectName
-    const subject = await this.xueKaoDao.findSubjectIdBySubjectName(subjectName)
-    if (!subject) {
+    try {
+
+      const subjectName = entity.subjectName
+      const subject = await this.xueKaoDao.findSubjectIdBySubjectName(subjectName)
+      if (!subject) {
+        return {
+          code: ResponseCode.ERROR,
+          message: '没有此学科'
+        }
+      }
+      const res = await this.xueKaoDao.create({
+        subjectId: subject.id,
+        level: entity.level,
+        idNumber: entity.idNumber
+      })
+
+      return {
+        code: ResponseCode.OK,
+        message: 'ok',
+        response: res
+      }
+    } catch (e) {
       return {
         code: ResponseCode.ERROR,
-        message: '没有此学科'
+        message: '科目不能重复'
       }
-    }
-    const res = await this.xueKaoDao.create({
-      subjectId: subject.id,
-      level: entity.level,
-      idNumber: entity.idNumber
-    })
-
-    return {
-      code: ResponseCode.OK,
-      message: 'ok',
-      response: res
     }
   }
 

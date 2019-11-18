@@ -6,7 +6,6 @@ import {UserInfo} from './UserDao'
 import {SchoolInfo} from './SchoolDao'
 import {QueryOption} from '../util/help'
 import {SubjectInfo} from './SubjectDao'
-import Promise from 'sequelize'
 
 export interface XuankaoDao {
   /**

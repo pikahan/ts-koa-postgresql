@@ -44,18 +44,16 @@ export interface EnrollmentDao {
 export interface EnrollmentInfo {
   id?: number
   majorId: string
-  subjectId: string
   year: string
   tuition: string
-  otherRequirement: string
+  grade: number
 }
 
 export interface EnrollmentViewInfo {
   id?: number
   majorName: string
-  subjectName: string
   schoolName: string
   year: string
   tuition: string
-  otherRequirement: string
+  grade: number
 }

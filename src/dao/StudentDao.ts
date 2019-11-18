@@ -12,6 +12,7 @@ export interface StudentDao {
    */
   findAll(queryOption: QueryOption): Promise<Array<StudentInfo>>
 
+  findUserByUsername(username: string)
 
   findAllWithLimitation(currPage: number, limit: number): Promise<Array<StudentInfo>>
 
@@ -40,6 +41,8 @@ export interface StudentDao {
   delete(id: number)
 
   update(id: number, entity: StudentInfo)
+
+  createAndUpdateUser(username: string, entity: StudentInfo)
 
 }
 export interface StudentInfo {

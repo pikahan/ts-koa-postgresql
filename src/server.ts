@@ -28,24 +28,8 @@ const CONFIG = {
 app.use(bodyParser())
 .use(cors())
 .use(session(CONFIG, app))
-
-// app.use(async (ctx, next) => {
-//   //查看redis中的内容
-//   redisClient.keys('*', (errr, keys) => {
-//     console.log('keys:', keys)
-//     keys.forEach(key => {
-//       redisClient.get(key, (err, val) => {
-//         console.log(val)
-//       })
-//     })
-//   })
-//   // if (ctx.path === '/favicon.ico') return
-//   // let n = ctx.session.count || 0
-//   // ctx.session.count = ++n
-//   await next()
-// })
-  .use(router.routes())
-  .use(router.allowedMethods())
+.use(router.routes())
+.use(router.allowedMethods())
 /**
  * @name: 设置静态资源目录
  * @param : undefined

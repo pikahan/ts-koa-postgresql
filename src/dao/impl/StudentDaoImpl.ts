@@ -7,7 +7,9 @@ import {StudentDao, StudentInfo} from '../StudentDao'
 import Student from '../../db/models/student'
 import School from '../../db/models/school'
 import {QueryOption, queryOption2SequelizeQueryOption} from '../../util/help'
-
+import {Sequelize} from 'sequelize-typescript'
+import * as sequelize from 'sequelize'
+import User from '../../db/models/user'
 
 export class StudentDaoImpl implements StudentDao {
   constructor() {
@@ -30,6 +32,15 @@ export class StudentDaoImpl implements StudentDao {
     })
   }
 
+  public async findUserByUsername(username: string) {
+    return await User.findOne({
+      raw: true,
+      where: {
+        username
+      }
+    })
+  }
+
   public async findAll(queryOption: QueryOption): Promise<Array<StudentInfo>> {
     return await Student.findAll(queryOption2SequelizeQueryOption(queryOption));
   }
@@ -43,6 +54,18 @@ export class StudentDaoImpl implements StudentDao {
       where: {
         id,
       },
+    })
+  }
+
+  public async createAndUpdateUser(username: string, entity: StudentInfo) {
+    const idNumber = entity.idNumber ? entity.idNumber : null
+    const sex = entity.sex ? entity.sex : null
+    const phoneNumber = entity.phoneNumber ? entity.phoneNumber : null
+    const name = entity.name ? entity.name : null
+    const highSchoolName = entity.highSchoolName ? entity.highSchoolName : null
+    const province = entity.highSchoolName ? entity.province : null
+    return await dbContext.getInstance().query('SELECT (insert_records_into_student_and_update_user(:username, :idNumber, :sex, :phoneNumber, :name, :highSchoolName, :province))', {
+      replacements: { username, idNumber, sex, phoneNumber, name,  highSchoolName, province}, type: sequelize.QueryTypes.SELECT
     })
   }
 

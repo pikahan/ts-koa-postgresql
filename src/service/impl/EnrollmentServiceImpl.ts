@@ -3,13 +3,11 @@
  */
 
 
-import Promise from 'sequelize/types/lib/promise'
 import {QueryOption} from '../../util/help'
 import {EnrollmentService} from '../EnrollmentService'
 import {EnrollmentDao, EnrollmentInfo, EnrollmentViewInfo} from '../../dao/EnrollmentDao'
 import {EnrollmentDaoImpl} from '../../dao/impl/EnrollmentDaoImpl'
 import {Response, ResponseCode} from '../../util/type'
-import {MajorInfo, MajorViewInfo} from '../../dao/MajorDao'
 
 export class EnrollmentServiceImpl implements EnrollmentService {
   private enrollmentDao: EnrollmentDao
@@ -18,11 +16,12 @@ export class EnrollmentServiceImpl implements EnrollmentService {
     this.enrollmentDao = new EnrollmentDaoImpl()
   }
 
-  public async create(entity: EnrollmentViewInfo): Promise<EnrollmentInfo> {
+  public async create(entity: EnrollmentViewInfo): Promise<Response<EnrollmentInfo>> {
     try {
-      const {schoolName, majorName, subjectName, ...rest} = entity
+      const {schoolName, majorName, ...rest} = entity
+      rest.grade = ~~rest.grade
       const major = await this.enrollmentDao.findByMajorNameAndSchoolName(majorName, schoolName)
-      const subject = await this.enrollmentDao.findBySubjectName(subjectName)
+      // const subject = await this.enrollmentDao.findBySubjectName(subjectName)
 
 
       if (!major) {
@@ -32,16 +31,9 @@ export class EnrollmentServiceImpl implements EnrollmentService {
         }
       }
 
-      if (!subject) {
-        return {
-          code: ResponseCode.ERROR,
-          message: '修改失败: 没有此学科'
-        }
-      }
-
       await this.enrollmentDao.create({
         majorId: major.id,
-        subjectId: subject.id,
+        // subjectId: subject.id,
         ...rest
       })
 
@@ -69,14 +61,14 @@ export class EnrollmentServiceImpl implements EnrollmentService {
       const eMessage = e.toString()
       const ret = {
         code: ResponseCode.ERROR,
-        message: '删除失败'
+        message: '删除失败: 请在招生要求中删除相关信息'
       }
 
       return ret
     }
   }
 
-  public async findAll(queryOption: QueryOption): Promise<Array<EnrollmentInfo>> {
+  public async findAll(queryOption: QueryOption): Promise<Response<Array<EnrollmentInfo>>> {
     try {
       const data = await this.enrollmentDao.findAll(queryOption)
       return {
@@ -92,7 +84,7 @@ export class EnrollmentServiceImpl implements EnrollmentService {
     }
   }
 
-  findByMajorId(majorId: string): Promise<EnrollmentInfo> {
+  findByMajorId(majorId: string): Promise<Response<EnrollmentInfo>> {
     return undefined;
   }
 
@@ -106,10 +98,8 @@ export class EnrollmentServiceImpl implements EnrollmentService {
 
   public async update(id: number, entity: EnrollmentViewInfo){
     try {
-      const {schoolName, majorName, subjectName, ...rest} = entity
+      const {schoolName, majorName, ...rest} = entity
       const major = await this.enrollmentDao.findByMajorNameAndSchoolName(majorName, schoolName)
-      const subject = await this.enrollmentDao.findBySubjectName(subjectName)
-
 
       if (!major) {
         return {
@@ -118,16 +108,15 @@ export class EnrollmentServiceImpl implements EnrollmentService {
         }
       }
 
-      if (!subject) {
-        return {
-          code: ResponseCode.ERROR,
-          message: '修改失败: 没有此学科'
-        }
-      }
+      // if (!subject) {
+      //   return {
+      //     code: ResponseCode.ERROR,
+      //     message: '修改失败: 没有此学科'
+      //   }
+      // }
 
       await this.enrollmentDao.update(id, {
         majorId: major.id,
-        subjectId: subject.id,
         ...rest
       })
 

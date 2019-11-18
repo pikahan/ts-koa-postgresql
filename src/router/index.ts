@@ -14,10 +14,8 @@ import studentRouter from './studentRouter'
 import specialityRouter from './specialityRouter'
 import xuekaoRouter from './xuekaoRouter'
 import xuankaoRouter from './xuankaoRouter'
-import {LoginStatusCode, STATUS} from '../util/constant'
-import {UserService} from '../service/UserService'
-import {UserServiceImpl} from '../service/impl/UserServiceImpl'
-const userService: UserService = new UserServiceImpl()
+import enrollmentRequireRouter from './enrollmentRequireRouter'
+import recommendationRouter from './recommendationRouter'
 
 const router = new Router({
   prefix: '/api',
@@ -107,6 +105,10 @@ router.use('/speciality', specialityRouter.routes(), specialityRouter.allowedMet
 router.use('/xuekao', xuekaoRouter.routes(), xuekaoRouter.allowedMethods())
 
 router.use('/xuankao', xuankaoRouter.routes(), xuankaoRouter.allowedMethods())
+
+router.use('/enrollmentRequire', enrollmentRequireRouter.routes(), enrollmentRequireRouter.allowedMethods())
+
+router.use('/recommendation', recommendationRouter.routes(), recommendationRouter.allowedMethods())
 
 
 export {router}

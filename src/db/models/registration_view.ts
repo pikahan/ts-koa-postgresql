@@ -18,6 +18,9 @@ export default class RegistrationView extends Model<RegistrationView> {
   conditions: string
 
   @Column
+  registrationWay: string
+
+  @Column
   startTime: Date
 
   @Column

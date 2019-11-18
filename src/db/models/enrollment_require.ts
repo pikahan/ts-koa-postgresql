@@ -1,9 +1,9 @@
 import { Table, Column, Model } from 'sequelize-typescript'
 
 @Table({
-  tableName: 'enrollment'
+  tableName: 'enrollment_require'
 })
-export default class Enrollment extends Model<Enrollment> {
+export default class EnrollmentRequire extends Model<EnrollmentRequire> {
   @Column({
     comment: '自增ID',
     primaryKey: true,
@@ -12,18 +12,13 @@ export default class Enrollment extends Model<Enrollment> {
   id: number
 
   @Column
-  majorId: number
+  subjectId: number
 
   @Column
-  year: string
+  enrollmentId: string
+
 
   @Column
-  tuition: number
-
-  @Column
-  planNumber: number
-
-  @Column
-  grade: number
+  otherRequirement: string
 }
 

@@ -1,9 +1,9 @@
 import { Table, Column, Model } from 'sequelize-typescript'
 
 @Table({
-  tableName: 'enrollment'
+  tableName: 'recommendation_view'
 })
-export default class Enrollment extends Model<Enrollment> {
+export default class RecommendationView extends Model<RecommendationView> {
   @Column({
     comment: '自增ID',
     primaryKey: true,
@@ -12,18 +12,12 @@ export default class Enrollment extends Model<Enrollment> {
   id: number
 
   @Column
-  majorId: number
+  majorName: string
 
   @Column
-  year: string
+  schoolName: string
 
   @Column
-  tuition: number
-
-  @Column
-  planNumber: number
-
-  @Column
-  grade: number
+  reason: string
 }
 

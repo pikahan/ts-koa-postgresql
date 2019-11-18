@@ -16,7 +16,20 @@ export class SpecialityServiceImpl implements SpecialityService {
     this.specialityDao = new SpecialityDaoImpl()
   }
 
-  create(entity: SpecialityInfo) {
+  public async create(entity: SpecialityInfo) {
+    try {
+      const data = await this.specialityDao.create(entity)
+      return {
+        code: ResponseCode.OK,
+        message: '创建成功',
+        response: data
+      }
+    } catch (e) {
+      return {
+        code: ResponseCode.ERROR,
+        message: "创建失败: 编号重复"
+      }
+    }
   }
 
   public async delete(id: number) {

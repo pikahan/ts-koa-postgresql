@@ -35,4 +35,10 @@ export interface StudentService {
    * @param {number} id
    */
   delete(id: number)
+
+  createAndUpdateUser(username: string, entity: StudentInfo)
+
+  update(id: number, entity: StudentInfo): Promise<Response<Array<StudentInfo>>>
+
+  updateByUsername(username: string, entity: StudentInfo): Promise<Response<Array<StudentInfo>>>
 }

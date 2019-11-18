@@ -14,6 +14,8 @@ export default class Registration extends Model<Registration> {
   @Column
   schoolId: number
 
+  @Column
+  registrationWay: string
 
   @Column
   conditions: string
